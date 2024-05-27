@@ -1,11 +1,11 @@
 import { Button } from 'antd'
 import React from 'react'
 
-const ControlBtns = () => {
+const ControlBtns = (props: any) => {
     return (
         <div style={{ display: "flex", gap: "20px", marginLeft: "auto", justifyContent: "flex-start", width: "250px", }}>
             <Button>Scroll</Button>
-            <Button>Save</Button>
+            <Button onClick={props.onSave}>Save</Button>
         </div>
     )
 }

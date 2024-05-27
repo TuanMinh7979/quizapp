@@ -2,8 +2,9 @@ import { Row } from 'antd'
 import React, { useState } from 'react'
 
 interface PropsType {
-    ans: string;
-    id: string
+    rightLbl: string;
+    id: string;
+    order: number
 
 }
 
@@ -17,9 +18,9 @@ const QuestionCard = (props: PropsType) => {
     };
 
     return (
-        <div style={{ borderBottom: "1px dashed black", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", padding:"10px 0px 10px 0px" }}>
+        <div style={{ borderBottom: "1px dashed black", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", padding: "10px 0px 10px 0px" }}>
             <div style={{ margin: "0 auto" }}>
-                <img style={{ objectFit: "cover", width: "1000px", height: "300px" }} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLaGstu_5h_XZNusvQ9NrTDUGo8eF7xwORRqv8dZeV&s" alt="" />
+                <img style={{ objectFit: "cover", width: "1000px", height: "300px" }} src="https://i.ex-cdn.com/giadinhmoi.vn/files/news/2022/07/07/de-thi-mon-toan-tot-nghiep-thpt-quoc-gia-2022-tat-ca-ma-de-day-du-nhat-164634.jpg" alt="" />
             </div>
             <div style={{ width: "80%", margin: "0 auto", display: "flex", justifyContent: 'center' }}>
                 <div style={{ flex: "1", display: "flex", justifyContent: 'flex-start' }}>

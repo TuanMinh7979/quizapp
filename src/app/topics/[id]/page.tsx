@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from 'react'
-import { Button, Col, Divider, Row } from "antd";
+import React, { use, useEffect, useState } from 'react'
+import { Button, Col, Divider, Row, message } from "antd";
 import ExamCard from '@/components/ExamCard';
 import { useParams, useRouter } from 'next/navigation';
 import {
@@ -8,6 +8,9 @@ import {
 } from '@ant-design/icons'
 import { TopicType } from '@/app/mock/types';
 import data from '@/app/mock/Topic';
+import { useDispatch } from 'react-redux';
+import { SetLoading } from '@/redux/loadersSlice';
+import axios from 'axios';
 const Section = () => {
   const style: React.CSSProperties = { padding: '0 0' };
   const { id } = useParams();
@@ -18,15 +21,39 @@ const Section = () => {
 
 
   }
-  const topicInfo = useState<TopicType>((data.filter((el) => id == el.url))[0])[0]
+  const dispatch = useDispatch();
+  const [exams, setExams] = React.useState<any[]>([]);
+
+  const fetchInit = async () => {
+    try {
+      dispatch(SetLoading(true));
+      const response = await axios.get(`/api/exams?topicIdStr=${id}`);
+      console.log("-----------",response.data);
+      setExams(response.data.rs);
+    } catch (error: any) {
+      message.error(error.message);
+    } finally {
+      dispatch(SetLoading(false));
+    }
+  };
+
+  useEffect(() => {
+    fetchInit()
+  }, [])
+
   return (
-    <>
-      <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={onClickBack} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>{topicInfo.text}</h3></div>
+    <>{exams && exams.length > 0 && <>
+      <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={onClickBack} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>{exams[0]?.topic}</h3></div>
       <Row gutter={[16, 24]}>
-        <Col className="gutter-row" span={6}>
-          <div className="math-section" style={style}><ExamCard url={`/exams/${topicInfo.prefixTestCode}1`} title={`${topicInfo.prefixTestCode}1`}></ExamCard></div>
-        </Col>
-      </Row>
+
+        {exams.map((el) => <>
+
+          <Col className="gutter-row" span={6}>
+            <div className="math-section" style={style}><ExamCard url={`/exams/${el.name}`} title={el?.name}></ExamCard></div>
+          </Col>
+        </>)}
+
+      </Row></>}
     </>
   )
 }

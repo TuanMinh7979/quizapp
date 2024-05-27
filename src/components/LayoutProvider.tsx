@@ -92,8 +92,8 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
             <div>{children}</div>
           ) : (
             currentUser && (
-              <Layout style={{ height: "1000px" }}>
-                <Sider trigger={null} collapsible collapsed={collapsed}>
+              <Layout >
+                <Sider style={{height:"5000px", overflow:"auto"}} trigger={null} collapsible collapsed={collapsed}>
                   <div className="demo-logo-vertical" />
                   <div style={{ color: "white", display: "flex", justifyContent: "center", marginLeft: '-10px' }}><UserOutlined />&nbsp;&nbsp;{currentUser.username}</div>
                   <Menu

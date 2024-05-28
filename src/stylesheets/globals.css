@@ -79,10 +79,6 @@ table {
   border: 1px solid red;
 }
 
-/* .math-section:hover {
-  
-  
-} */
 
 .ant-card:hover {
   cursor: pointer;
@@ -182,4 +178,48 @@ table {
 
 
 
+}
+
+.exam-col {
+  border-color: black !important;
+}
+
+.ctr-btn-1 {
+  border: 3px solid blue;
+  padding: 6px 26px;
+  border-radius: 12px;
+  color: blue;
+  font-weight: bold;
+
+}
+
+.ctr-btn-2 {
+  border: 3px solid yellow;
+  padding: 6px 26px;
+  border-radius: 12px;
+  color: black;
+  font-weight: bold;
+}
+
+.ctr-btn-3 {
+  border: 3px solid orange;
+  padding: 6px 26px;
+  border-radius: 12px;
+  color: orange;
+  font-weight: bold;
+}
+
+.ctr-btn-1:hover {
+  color: white;
+  background-color: blue;
+}
+
+.ctr-btn-2:hover {
+
+  background-color: yellow;
+}
+
+.ctr-btn-3:hover {
+  color: white;
+  background-color: orange;
 }

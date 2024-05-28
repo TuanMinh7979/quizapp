@@ -6,7 +6,7 @@ import {
 import { useParams, useRouter } from 'next/navigation';
 
 import { Row, message } from 'antd';
-import QuestionCard from '@/components/QuestionCard';
+
 import ControlBtns from '@/components/ControlBtns';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
@@ -14,19 +14,7 @@ import axios from 'axios';
 import QuestionCardForView from '@/components/QuestionCardForView';
 
 
-const changeKeys = (oldKey: string, newKey: string, lst: any[]) => {
-    return lst.map(obj => {
-        const { [oldKey]: value, ...rest } = obj;
-        return { ...rest, [newKey]: value };
-    });
-}
 
-const removeKeys = (keyToRemove: string, lst: any[]) => {
-    return lst.map(obj => {
-        const { [keyToRemove]: removedValue, ...rest } = obj; // Destructure and exclude key
-        return { ...rest }; // Create new object without the removed key
-    });
-}
 const ViewResult = () => {
     // id is Exam.name or code
     const { currentUser } = useSelector((state: any) => state.users);

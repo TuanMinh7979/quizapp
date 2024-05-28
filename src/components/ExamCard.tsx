@@ -22,20 +22,27 @@ const ViewResultComponent = (cb: any) => {
 }
 
 
+
 const ExamCard = (props: PropsType) => {
     const { title, url, answerCnt, questionCnt, correctCnt } = props;
     const router = useRouter();
     const onShowViewResult = (event: any) => {
         event.preventDefault()
         event.stopPropagation()
-        router.push(url.replace("exams","viewresults"))
-       
+        router.push(url.replace("exams", "viewresults"))
+
+    }
+    const onMainActionClick = (event: any) => {
+        event.preventDefault()
+        event.stopPropagation()
+        router.push(url)
+
     }
 
 
-    return <Link href={url}><Card
+    return <><Card
 
-        style={{ width: "100%" }}
+        style={{ width: "100%", border: "1px solid black" }}
         cover={
             <div style={{ display: "flex", justifyContent: "space-between", padding: '0px 20px', borderBottom: "1px solid #C6CBDE" }}><h3 >{title}</h3>
                 {correctCnt == questionCnt && correctCnt != 0 ? <h4 className='exam-status exam-status-done'>Done</h4> : answerCnt == 0 ? <h4 className='exam-status exam-status-new'>New</h4> : <h4 className='exam-status exam-status-continue'>Continue</h4>}
@@ -46,13 +53,13 @@ const ExamCard = (props: PropsType) => {
             correctCnt == questionCnt && correctCnt != 0 ?
 
                 [
-                    <span>ReTest</span>,
+                    <span className="ctr-btn-1" onClick={onMainActionClick}>ReTest</span>,
                     ViewResultComponent(onShowViewResult)
                 ] : answerCnt == 0 ?
 
-                    [<span>Start</span>,
+                    [<span className="ctr-btn-2" onClick={onMainActionClick}>Start</span>,
                     ViewResultComponent(onShowViewResult)]
-                    : [<span>Continue</span>,
+                    : [<span className="ctr-btn-3" onClick={onMainActionClick}>Continue</span>,
                     ViewResultComponent(onShowViewResult)]
 
 
@@ -65,7 +72,7 @@ const ExamCard = (props: PropsType) => {
 
 
         />
-    </Card></Link>
+    </Card></>
 }
 
 

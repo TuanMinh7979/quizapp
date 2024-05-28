@@ -15,14 +15,14 @@ const QuestionCardForView = (props: PropsType) => {
     const [selectedAns, setSelectedAns
     ] = useState(props.eAnsLbl ? props.eAnsLbl : '');
 
-    const onChangeAns = (event: any) => {
-        setSelectedAns(event.target.value);
-        props.changeAns(props.id, event.target.value)
-    };
+
 
 
     return (
         <div style={{ borderBottom: "1px dashed black", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", padding: "10px 0px 10px 0px" }}>
+            <h3 style={{ alignSelf: "start" }}><span style={{ color: "blue", fontWeight: "bold" }}>{props.order + 1}</span>
+                &nbsp; &nbsp;  <span style={{ color: "#6d6d75", fontSize: "10px" }}>ID:{props.id}</span>
+            </h3>
             <div style={{ margin: "0 auto" }}>
                 <img style={{ objectFit: "cover", width: "1000px", height: "300px" }} src="https://i.ex-cdn.com/giadinhmoi.vn/files/news/2022/07/07/de-thi-mon-toan-tot-nghiep-thpt-quoc-gia-2022-tat-ca-ma-de-day-du-nhat-164634.jpg" alt="" />
             </div>
@@ -30,22 +30,22 @@ const QuestionCardForView = (props: PropsType) => {
                 <div style={{ flex: "1", display: "flex", justifyContent: 'flex-start' }}>
                     <label
 
-                         className={`ans-label ans-label-disabled  ${selectedAns == 'A' ? 'selected' : ''} ${props.rightLbl == 'A' ? 'correct-ans' : ''}`} >A</label> <input disabled className='ans-radio' type="radio" id={`${props.id}A`} name={props.id} value="A" />
+                        className={`ans-label ans-label-disabled  ${selectedAns == 'A' ? 'selected' : ''} ${props.rightLbl == 'A' ? 'correct-ans' : ''}`} >A</label> <input disabled className='ans-radio' type="radio" id={`${props.id}A`} name={props.id} value="A" />
 
 
                 </div>
                 <div style={{ flex: "1", display: "flex", justifyContent: 'flex-start' }}>
-                    <label  className={`ans-label ans-label-disabled ${selectedAns == 'B' ? 'selected' : ''} ${props.rightLbl == 'B' ? 'correct-ans' : ''}`} >B</label> <input disabled className='ans-radio' type="radio" id={`${props.id}B`} name={props.id} value="B" />
+                    <label className={`ans-label ans-label-disabled ${selectedAns == 'B' ? 'selected' : ''} ${props.rightLbl == 'B' ? 'correct-ans' : ''}`} >B</label> <input disabled className='ans-radio' type="radio" id={`${props.id}B`} name={props.id} value="B" />
 
 
                 </div>
                 <div style={{ flex: "1", display: "flex", justifyContent: 'flex-start' }}>
-                    <label  className={`ans-label ans-label-disabled ${selectedAns == 'C' ? 'selected' : ''} ${props.rightLbl == 'C' ? 'correct-ans' : ''}`} >C</label> <input disabled className='ans-radio' type="radio" id={`${props.id}C`} name={props.id} value="C" />
+                    <label className={`ans-label ans-label-disabled ${selectedAns == 'C' ? 'selected' : ''} ${props.rightLbl == 'C' ? 'correct-ans' : ''}`} >C</label> <input disabled className='ans-radio' type="radio" id={`${props.id}C`} name={props.id} value="C" />
 
 
                 </div>
                 <div style={{ flex: "1", display: "flex", justifyContent: 'flex-start' }}>
-                    <label  className={`ans-label ans-label-disabled ${selectedAns == 'D' ? 'selected' : ''} ${props.rightLbl == 'D' ? 'correct-ans' : ''}`} >D</label> <input disabled className='ans-radio' type="radio" id={`${props.id}D`} name={props.id} value="D" />
+                    <label className={`ans-label ans-label-disabled ${selectedAns == 'D' ? 'selected' : ''} ${props.rightLbl == 'D' ? 'correct-ans' : ''}`} >D</label> <input disabled className='ans-radio' type="radio" id={`${props.id}D`} name={props.id} value="D" />
 
 
                 </div>

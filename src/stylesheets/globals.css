@@ -118,10 +118,16 @@ table {
   border-radius: 50%;
 }
 
-.ans-label.correct-ans {
+.ans-label.right-ans {
 
   border: 2px solid green;
   border-radius: 50%;
+}
+
+.ans-label.exact-ans {
+
+  border: 6px solid blue;
+  border-radius: 10%;
 }
 
 .ans-label:hover {
@@ -223,3 +229,11 @@ table {
   color: white;
   background-color: orange;
 }
+
+.hintIcon:hover {
+
+  color:blue;
+
+
+}
+

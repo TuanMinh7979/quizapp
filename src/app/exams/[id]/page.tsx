@@ -11,6 +11,24 @@ import ControlBtns from '@/components/ControlBtns';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
+import mongoose from 'mongoose';
+
+const changeKeys = (oldKey: string, newKey: string, lst: any[]) => {
+    return lst.map(obj => {
+        const { [oldKey]: value, ...rest } = obj;
+        return { ...rest, [newKey]: value };
+    });
+}
+
+const removeKeys = (keyToRemove: string, lst: any[]) => {
+
+
+
+    return lst.map(obj => {
+        const { [keyToRemove]: removedValue, ...rest } = obj; // Destructure and exclude key
+        return { ...rest }; // Create new object without the removed key
+    });
+}
 const Exam = () => {
     // id is Exam.name or code
     const { currentUser } = useSelector((state: any) => state.users);
@@ -26,17 +44,23 @@ const Exam = () => {
         try {
             dispatch(SetLoading(true));
             const response = await axios.get(`/api/exams/${id}`);
-            console.log("-----------12", response.data);
+
 
             let qsList = response.data.rs.questions;
+            let answerList = response.data.rs.answers;
             let dataToExamTry = []
+
             for (let el of qsList) {
+                let eAnsIdx = answerList.findIndex((item: any) => item.questionId == el._id)
+
                 dataToExamTry.push({
+                    eAnswerId: eAnsIdx != -1 ? answerList[eAnsIdx]._id : '',
                     examId: response.data.rs._id,
                     questionId: el._id,
-                    lbl: '',
+                    lbl: eAnsIdx != -1 ? answerList[eAnsIdx].lbl : '',
                     userId: currentUser._id
                 })
+                el["eAnsLbl"] = eAnsIdx != -1 ? answerList[eAnsIdx].lbl : ''
             }
             setData(response.data.rs);
 
@@ -60,8 +84,18 @@ const Exam = () => {
             dispatch(SetLoading(true));
 
 
-            let validAnswersToPost = [...examTry].filter(el => el.lbl)
-            const response = await axios.post("/api/answers", validAnswersToPost);
+            let toAddList = removeKeys('eAnswerId', [...examTry].filter(el => !el.eAnswerId))
+            // let toUpdateList = changeKeys('eAnswerId', '_id', [...examTry].filter(el => el.eAnswerId))
+            let toUpdateList = [...examTry].filter(el => el.eAnswerId)
+
+
+
+            console.log(toAddList)
+            console.log(">>>>>update", toUpdateList)
+
+
+
+            const response = await axios.post("/api/answers", { toAddList, toUpdateList });
             message.success(response.data.message);
 
 
@@ -87,7 +121,8 @@ const Exam = () => {
 
         setExamTry([...tmpExamTry])
     };
-
+    console.log("data render", data)
+    console.log("data tosave", examTry)
     return (
         <>{data && <>
 
@@ -95,15 +130,8 @@ const Exam = () => {
             <ControlBtns onSave={onSave} />
             <div style={{ width: "90%", border: "1px solid gray", padding: "10px 10px 200px 10px", margin: "0 auto" }}>
                 {data.questions.length > 0 && data.questions.map((el: any, index: number) => <>
-
-                    <QuestionCard changeAns={changeAns} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCard>
+                    <QuestionCard eAnsLbl={el.eAnsLbl} changeAns={changeAns} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCard>
                 </>)}
-
-
-
-
-
-
             </div>
             <ControlBtns onSave={onSave} />
         </>}

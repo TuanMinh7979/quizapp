@@ -22,7 +22,7 @@ interface UserType {
 function LayoutProvider({ children }: { children: React.ReactNode }) {
   const { currentUser }: { currentUser: UserType } = useSelector((state: any) => state.users);
   const { loading } = useSelector((state: any) => state.loaders);
-  console.log(currentUser, loading)
+
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -45,7 +45,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   useEffect(() => {
     if (pathname !== "/login" && !currentUser) {
-      console.log("get logged user")
+
       getCurrentUser();
     }
   }, [pathname]);
@@ -64,7 +64,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
   };
 
   const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e);
+
     if (e.key == 'logout') {
       onLogout()
     }

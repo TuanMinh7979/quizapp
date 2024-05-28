@@ -5,14 +5,15 @@ interface PropsType {
     rightLbl: string;
     id: string;
     order: number,
-    changeAns: Function
+    changeAns: Function;
+    eAnsLbl: string;
 
 }
 
 const QuestionCard = (props: PropsType) => {
 
     const [selectedAns, setSelectedAns
-    ] = useState('');
+    ] = useState(props.eAnsLbl ? props.eAnsLbl : '');
 
     const onChangeAns = (event: any) => {
         setSelectedAns(event.target.value);

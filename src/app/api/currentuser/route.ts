@@ -32,6 +32,11 @@ export async function GET(request: NextRequest) {
       data: user,
     });
   } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    const response = NextResponse.json(
+      { message: "Cookies has expired" },
+      { status: 500 }
+    );;
+    response.cookies.set("token", "", { maxAge: 0 });
+    return response;
   }
 }

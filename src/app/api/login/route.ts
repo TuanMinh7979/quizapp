@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
         if (reqBody.password !== user.password) {
             throw new Error("Invalid password");
         }
-        console.log(user)
+        
         const dataToBeSigned = {
             userId: user._id,
             username: user.username,

@@ -21,6 +21,8 @@ const Section = () => {
 
 
   }
+
+
   const dispatch = useDispatch();
   const [exams, setExams] = React.useState<any[]>([]);
 
@@ -28,8 +30,25 @@ const Section = () => {
     try {
       dispatch(SetLoading(true));
       const response = await axios.get(`/api/exams?topicIdStr=${id}`);
-      console.log("-----------",response.data);
-      setExams(response.data.rs);
+  
+      let dataTemp = response.data.rs;
+      for (let examDataItem of dataTemp) {
+        let questionsTemp = examDataItem.questions
+        let answersTemp = examDataItem.answers
+        let correctCnt = 0;
+        for (let ansI of answersTemp) {
+          let idx = questionsTemp.findIndex((el: any) => el._id == ansI.questionId);
+          if (ansI.lbl == questionsTemp[idx].rightLbl) {
+            correctCnt++;
+          }
+        }
+        examDataItem["correctCnt"] = correctCnt
+
+
+      }
+   
+      setExams(dataTemp);
+
     } catch (error: any) {
       message.error(error.message);
     } finally {
@@ -49,7 +68,7 @@ const Section = () => {
         {exams.map((el) => <>
 
           <Col className="gutter-row" span={6}>
-            <div className="math-section" style={style}><ExamCard url={`/exams/${el.name}`} title={el?.name}></ExamCard></div>
+            <div className="math-section" style={style}><ExamCard correctCnt={el.correctCnt} questionCnt={el.questionCnt} answerCnt={el.answerCnt} url={`/exams/${el.name}`} title={el?.name}></ExamCard></div>
           </Col>
         </>)}
 

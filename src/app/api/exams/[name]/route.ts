@@ -17,6 +17,21 @@ export async function GET(request: NextRequest, { params }: any) {
       },
     },
     {
+      $lookup: {
+        from: 'answers',
+        localField: '_id',
+        foreignField: 'examId',
+        as: 'answers',
+      },
+    },
+    {
+      $addFields: {
+
+        questionCnt: { $size: '$questions' },
+        answerCnt: { $size: '$answers' },
+      },
+    },
+    {
       $match: { // Optional filter for students (replace with your criteria)
         name: params.name, // Replace with actual student ID
       },

@@ -4,6 +4,7 @@ import { Avatar, Card } from 'antd';
 import Link from 'next/link';
 import Meta from 'antd/es/card/Meta';
 import ExamPreviewBody from './ExamPreviewBody';
+import { useRouter } from 'next/navigation';
 
 
 interface PropsType {
@@ -15,13 +16,22 @@ interface PropsType {
 
 }
 
+const ViewResultComponent = (cb: any) => {
+    return (<span onClick={cb}>View Result</span>)
+
+}
 
 
 const ExamCard = (props: PropsType) => {
     const { title, url, answerCnt, questionCnt, correctCnt } = props;
+    const router = useRouter();
+    const onShowViewResult = (event: any) => {
+        event.preventDefault()
+        event.stopPropagation()
+        router.push(url.replace("exams","viewresults"))
+       
+    }
 
-    // const [isDone, setIsDone] = useState(answerCnt == questionCnt && questionCnt ? true : false);
-    const [, setIsDone] = useState(answerCnt == questionCnt && questionCnt ? true : false);
 
     return <Link href={url}><Card
 
@@ -37,13 +47,13 @@ const ExamCard = (props: PropsType) => {
 
                 [
                     <span>ReTest</span>,
-                    <span>View Result</span>
+                    ViewResultComponent(onShowViewResult)
                 ] : answerCnt == 0 ?
 
                     [<span>Start</span>,
-                    <span>View Result</span>]
+                    ViewResultComponent(onShowViewResult)]
                     : [<span>Continue</span>,
-                    <span>View Result</span>]
+                    ViewResultComponent(onShowViewResult)]
 
 
         }

@@ -11,6 +11,7 @@ import ControlBtns from '@/components/ControlBtns';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
+import QuestionCardForView from '@/components/QuestionCardForView';
 
 
 const changeKeys = (oldKey: string, newKey: string, lst: any[]) => {
@@ -26,7 +27,7 @@ const removeKeys = (keyToRemove: string, lst: any[]) => {
         return { ...rest }; // Create new object without the removed key
     });
 }
-const Exam = () => {
+const ViewResult = () => {
     // id is Exam.name or code
     const { currentUser } = useSelector((state: any) => state.users);
     const { id } = useParams();
@@ -34,7 +35,7 @@ const Exam = () => {
     const onClickBack = (topicIdStr: string) => {
         router.push('/topics/' + topicIdStr)
     }
-    const [examTry, setExamTry] = useState<any[]>([])
+
     const dispatch = useDispatch();
     const [data, setData] = useState<any>();
     const fetchInit = async () => {
@@ -61,7 +62,7 @@ const Exam = () => {
             }
             setData(response.data.rs);
 
-            setExamTry([...dataToExamTry])
+          
         } catch (error: any) {
             message.error(error.message);
         } finally {
@@ -76,50 +77,20 @@ const Exam = () => {
 
 
 
-    const onSave = async (values: any) => {
-        try {
-            dispatch(SetLoading(true));
-
-            let toAddList = removeKeys('eAnswerId', [...examTry].filter(el => !el.eAnswerId))
-            let toUpdateList = [...examTry].filter(el => el.eAnswerId)
-            const response = await axios.post("/api/answers", { toAddList, toUpdateList });
-            message.success(response.data.message);
 
 
-            dispatch(SetLoading(false));
-            router.push("/");
-        } catch (error: any) {
-            message.error(error.response.data.message || "Something went wrong");
-        } finally {
-            dispatch(SetLoading(false));
-        }
-    };
-    const changeAns = (questionId: string, selectedAns: string) => {
 
-
-        let tmpExamTry = [...examTry]
-        for (let i = 0; i < tmpExamTry.length; i++) {
-            if (tmpExamTry[i].questionId == questionId) {
-                tmpExamTry[i].lbl = selectedAns;
-
-                break;
-            }
-        }
-
-        setExamTry([...tmpExamTry])
-    };
-   
     return (
         <>{data && <>
 
             <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={() => onClickBack(data.topicIdStr)} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3> {data.topic + ` > `}{data.name}</h3></div>
-            <ControlBtns onSave={onSave} />
+            <ControlBtns />
             <div style={{ width: "90%", border: "1px solid gray", padding: "10px 10px 200px 10px", margin: "0 auto" }}>
                 {data.questions.length > 0 && data.questions.map((el: any, index: number) => <>
-                    <QuestionCard eAnsLbl={el.eAnsLbl} changeAns={changeAns} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCard>
+                    <QuestionCardForView eAnsLbl={el.eAnsLbl} changeAns={()=>{}} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCardForView>
                 </>)}
             </div>
-            <ControlBtns onSave={onSave} />
+            <ControlBtns />
         </>}
 
 
@@ -128,4 +99,4 @@ const Exam = () => {
     )
 }
 
-export default Exam;
+export default ViewResult;

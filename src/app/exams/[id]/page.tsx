@@ -4,8 +4,7 @@ import {
     ArrowLeftOutlined
 } from '@ant-design/icons'
 import { useParams, useRouter } from 'next/navigation';
-import data from '@/app/mock/Topic';
-import { TopicType } from '@/app/mock/types';
+
 import { Row, message } from 'antd';
 import QuestionCard from '@/components/QuestionCard';
 import ControlBtns from '@/components/ControlBtns';
@@ -56,9 +55,39 @@ const Exam = () => {
 
 
 
-    const onSave = () => {
-        console.log(examTry)
-    }
+    const onSave = async (values: any) => {
+        try {
+            dispatch(SetLoading(true));
+
+
+            let validAnswersToPost = [...examTry].filter(el => el.lbl)
+            const response = await axios.post("/api/answers", validAnswersToPost);
+            message.success(response.data.message);
+
+
+            dispatch(SetLoading(false));
+            router.push("/");
+        } catch (error: any) {
+            message.error(error.response.data.message || "Something went wrong");
+        } finally {
+            dispatch(SetLoading(false));
+        }
+    };
+    const changeAns = (questionId: string, selectedAns: string) => {
+
+
+        let tmpExamTry = [...examTry]
+        for (let i = 0; i < tmpExamTry.length; i++) {
+            if (tmpExamTry[i].questionId == questionId) {
+                tmpExamTry[i].lbl = selectedAns;
+
+                break;
+            }
+        }
+
+        setExamTry([...tmpExamTry])
+    };
+
     return (
         <>{data && <>
 
@@ -67,7 +96,7 @@ const Exam = () => {
             <div style={{ width: "90%", border: "1px solid gray", padding: "10px 10px 200px 10px", margin: "0 auto" }}>
                 {data.questions.length > 0 && data.questions.map((el: any, index: number) => <>
 
-                    <QuestionCard order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCard>
+                    <QuestionCard changeAns={changeAns} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCard>
                 </>)}
 
 

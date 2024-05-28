@@ -5,11 +5,11 @@ import Answer from "@/models/answerModel";
 
 
 connectDB();
-
+// post a list answer
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    await Answer.create(reqBody);
+    await Answer.insertMany(reqBody);
     return NextResponse.json(
       { message: "Answer created successfully", success: true },
       { status: 201 }

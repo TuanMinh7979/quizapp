@@ -24,9 +24,9 @@ const ExamCard = (props: PropsType) => (
         //   />
         // }
         actions={[
-            //   <SettingOutlined key="setting" />,
+              <SettingOutlined key="setting" />,
 
-            //   <EllipsisOutlined key="ellipsis" />,
+              <EllipsisOutlined key="ellipsis" />,
         ]}
     >
         <Meta

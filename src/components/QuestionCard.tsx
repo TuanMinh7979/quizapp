@@ -4,7 +4,8 @@ import React, { useState } from 'react'
 interface PropsType {
     rightLbl: string;
     id: string;
-    order: number
+    order: number,
+    changeAns: Function
 
 }
 
@@ -15,7 +16,9 @@ const QuestionCard = (props: PropsType) => {
 
     const onChangeAns = (event: any) => {
         setSelectedAns(event.target.value);
+        props.changeAns(props.id, event.target.value)
     };
+
 
     return (
         <div style={{ borderBottom: "1px dashed black", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", padding: "10px 0px 10px 0px" }}>

@@ -57,6 +57,34 @@ export async function uploadFromBase64(fileName: String, base64Str: String) {
         return createdFile.data.id
 
     } catch (error: any) {
-        console.error("UPLOAD FILE FAILED")
+        console.log("---------------------)())(", error)
+        throw Error("Upload filed")
+    }
+}
+
+
+export async function deleteFile(id: string) {
+    try {
+        const clientId = process.env.client_id
+        const clientSecret = process.env.client_secret
+        const rfToken = process.env.rf_token
+
+
+        const oauthClient = new google.auth.OAuth2(clientId, clientSecret)
+        oauthClient.setCredentials({ refresh_token: rfToken })
+
+        const drive = google.drive({
+            version: 'v3',
+            auth: oauthClient
+        })
+
+        const del = await drive.files.delete({
+            fileId: id
+        })
+        console.log(">>>>>>>>>>>>>>>>", del)
+        return del
+
+    } catch (error: any) {
+        throw Error("Delete filed")
     }
 }

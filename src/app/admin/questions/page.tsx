@@ -14,41 +14,51 @@ const page = () => {
   const [questions, setQuestions] = useState<any[any]>([]); // State lưu trữ danh sách sinh viên
   const [exams, setExams] = useState<any[any]>([]); // State lưu trữ danh sách sinh viên
   const [mode, setMode] = useState("add");
-  const [newStudent, setNewStudent] = useState({ _id: '', rightLbl: '', examId: '' }); // State lưu trữ thông tin sinh viên mới
+  const [newQuestion, setNewQuestion] = useState({ _id: '', rightLbl: '', examId: '' }); // State lưu trữ thông tin sinh viên mới
 
   const addQuestionService = async () => {
-    try {
-      dispatch(SetLoading(true));
-      const response = await axios.post("/api/questions", { rightLbl: newStudent.rightLbl, examId: newStudent.examId });
-      message.success(response.data.message);
-      dispatch(SetLoading(false));
+    const examFinded = exams.find((el: any) => el.name == selectedExamName)
 
-    } catch (error: any) {
-      message.error(error.response.data.message || "Something went wrong");
-    } finally {
-      dispatch(SetLoading(false));
+    if (examFinded) {
+      try {
+        dispatch(SetLoading(true));
+
+        const response = await axios.post("/api/questions", { rightLbl: newQuestion.rightLbl, examId: examFinded._id });
+        console.log(response.data.rs)
+        message.success(response.data.message);
+        setQuestions([...questions, response.data.rs])
+
+
+        dispatch(SetLoading(false));
+
+      } catch (error: any) {
+        message.error(error.response.data.message || "Something went wrong");
+      } finally {
+        dispatch(SetLoading(false));
+      }
     }
+
   };
 
 
 
   const updateQuestionService = () => {
-    const updatedStudents = [...questions, newStudent];
+    const updatedStudents = [...questions, newQuestion];
     setQuestions(updatedStudents);
-    setNewStudent({ _id: '', rightLbl: '', examId: '' }); // Xóa thông tin sinh viên mới
+    setNewQuestion({ _id: '', rightLbl: '', examId: '' }); // Xóa thông tin sinh viên mới
   };
 
 
   const onEditClick = (stu: any) => {
 
     setMode("edit")
-    setNewStudent(stu)
+    setNewQuestion(stu)
 
   }
 
   const onClickReset = () => {
     setMode("add")
-    setNewStudent({ _id: '', rightLbl: '', examId: '' })
+    setNewQuestion({ ...newQuestion, _id: '', rightLbl: '', })
   }
   // Hàm xóa sinh viên
   const deleteQuestionService = (id: number) => {
@@ -62,23 +72,58 @@ const page = () => {
   const fetchInit = async () => {
     try {
       dispatch(SetLoading(true));
-      const response = await axios.get(`/admin/api/questions/001`);
-      let qsList = response.data.questionList;
-      let examList = response.data.examList;
+      const eRs = await axios.get(`/admin/api/exams`);
+      let examList = eRs.data.examList;
+
+
+      const qRs = await axios.get(`/admin/api/questions/${examList[0].name}`);
+
+      let qsList = qRs.data.questionList;
+
+
       console.log(qsList)
       setQuestions(qsList);
-      setExams(examList)
-    } catch (error: any) {
-      message.error(error.message);
-    } finally {
+      setExams(examList);
+      setSelectedExamName(examList[0].name)
       dispatch(SetLoading(false));
+    } catch (error: any) {
+      dispatch(SetLoading(false));
+      message.error(error.message);
     }
   };
 
+
+  const fetchWhenChangeExamName = async () => {
+    try {
+      dispatch(SetLoading(true));
+      const qRs = await axios.get(`/admin/api/questions/${selectedExamName}`);
+      let qsList = qRs.data.questionList;
+      console.log(qsList)
+      setQuestions(qsList);
+      dispatch(SetLoading(false));
+    } catch (error: any) {
+      dispatch(SetLoading(false));
+      message.error(error.message);
+
+    }
+  };
   useEffect(() => {
     fetchInit()
   }, [])
 
+
+
+  const [selectedExamName, setSelectedExamName] = useState("")
+  useEffect(() => {
+
+    fetchWhenChangeExamName()
+  }, [selectedExamName])
+
+
+  const onExamChange = (event: any) => {
+    setNewQuestion({ ...newQuestion, examId: event.target.value })
+    setSelectedExamName(event.target.value)
+  }
   return (
 
 
@@ -90,11 +135,12 @@ const page = () => {
         <form>
           <div>
             <label htmlFor="name">ID:</label>
-            <input type="text" id="_id" value={newStudent._id} disabled />
+            <input type="text" id="_id" value={newQuestion._id} disabled />
           </div>
           <div>
             <label htmlFor="rightLbl">RigthLbl:</label>
-            <select id="rightLbl" value={newStudent.rightLbl} onChange={(e) => setNewStudent({ ...newStudent, rightLbl: e.target.value })}>
+            <select id="rightLbl" value={newQuestion.rightLbl} onChange={(e) => setNewQuestion({ ...newQuestion, rightLbl: e.target.value })}>
+              <option value=""></option>
               <option value="A">A</option>
               <option value="B">B</option>
               <option value="C">C</option>
@@ -106,9 +152,9 @@ const page = () => {
           </div>
           <div>
             <label htmlFor="examId">ExamId:</label>
-            <select id="examId" value={newStudent.examId} onChange={(e) => setNewStudent({ ...newStudent, examId: e.target.value })}>
+            <select onChange={(event: any) => onExamChange(event)} id="examId" value={newQuestion.examId}>
               {exams.map((el: any) =>
-                <option value={el._id}>{el.name}</option>
+                <option value={el.name}>{el.name}</option>
 
               )}
 
@@ -116,7 +162,7 @@ const page = () => {
           </div>
           <div style={{ display: "flex", justifyContent: "flex-end", gap: "10%" }}>
             <button type="button" onClick={onClickReset}>Reset</button>
-            <button type="button" onClick={mode == "add" ? addQuestionService : updateQuestionService}>{mode == "add" ? "Add" : "Update"}
+            <button disabled={newQuestion.rightLbl ? false : true} type="button" onClick={mode == "add" ? addQuestionService : updateQuestionService}>{mode == "add" ? "Add" : "Update"}
             </button>
 
           </div>
@@ -137,10 +183,10 @@ const page = () => {
             </tr>
           </thead>
           <tbody>
-            {questions.map((student: any, index: number) => (
+            {questions.map((item: any, index: number) => (
               <Student
                 key={index}
-                student={student}
+                student={item}
 
                 deleteStudent={deleteQuestionService}
 

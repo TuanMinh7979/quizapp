@@ -5,11 +5,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest, { params }: any) {
     try {
 
-        const examList = await Exam.find();
+        const exam: any = await Exam.find({ name: params.examName })
         
-        const questionList = await Question.find({ examId: examList[0]._id });
+        const questionList = await Question.find({ examId: exam[0]._id });
         return NextResponse.json(
-            { questionList, examList },
+            { questionList },
             { status: 200 }
         );
     } catch (error: any) {

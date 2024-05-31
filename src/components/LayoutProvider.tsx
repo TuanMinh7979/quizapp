@@ -68,6 +68,13 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
     if (e.key == 'logout') {
       onLogout()
     }
+
+    if (e.key == '2') {
+      router.push("/admin/questions");
+    }
+    if (e.key == '1') {
+      router.push("/");
+    }
   };
   return (
     <html lang="en">
@@ -93,7 +100,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
           ) : (
             currentUser && (
               <Layout >
-                <Sider style={{height:"5000px", overflow:"auto"}} trigger={null} collapsible collapsed={collapsed}>
+                <Sider style={{ height: "5000px", overflow: "auto" }} trigger={null} collapsible collapsed={collapsed}>
                   <div className="demo-logo-vertical" />
                   <div style={{ color: "white", display: "flex", justifyContent: "center", marginLeft: '-10px' }}><UserOutlined />&nbsp;&nbsp;{currentUser.username}</div>
                   <Menu
@@ -108,6 +115,12 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                         key: '1',
                         icon: <VideoCameraOutlined />,
                         label: 'Test',
+                      },
+                      {
+                        key: '2',
+                        icon: <VideoCameraOutlined />,
+                        label: 'Admin',
+                        danger: true,
                       },
                       {
                         key: 'logout',
@@ -132,7 +145,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                         height: 64,
                       }}
                     />
-                   
+
                   </Header>
                   <Content
                     style={{

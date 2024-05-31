@@ -11,13 +11,13 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json();
 
     // check if user already exists
-  
 
 
-    await Question.create(reqBody);
-   
+
+    const rs = await Question.create(reqBody);
+
     return NextResponse.json(
-      { message: "Question created successfully", success: true },
+      { message: "Question created successfully", rs: rs, success: true },
       { status: 201 }
     );
   } catch (error: any) {

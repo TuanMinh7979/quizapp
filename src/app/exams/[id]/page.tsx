@@ -32,8 +32,8 @@ const Exam = () => {
     const { currentUser } = useSelector((state: any) => state.users);
     const { id } = useParams();
     const router = useRouter();
-    const onClickBack = (topicIdStr: string) => {
-        router.push('/topics/' + topicIdStr)
+    const onClickBack = (topicSlug: string) => {
+        router.push('/topics/' + topicSlug)
     }
     const [examTry, setExamTry] = useState<any[]>([])
     const dispatch = useDispatch();
@@ -141,7 +141,7 @@ const Exam = () => {
             {modalData && <AnswerModal modalData={modalData} isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></AnswerModal>}
 
 
-            <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={() => onClickBack(data.topicIdStr)} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3> {data.topic + ` > `}{data.name}</h3></div>
+            <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={() => onClickBack(data.topicSlug)} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3> {data.topicName + ` > `}{data.name}</h3></div>
             <ControlBtns onSave={onSave} />
             <div style={{ width: "90%", border: "1px solid gray", padding: "10px 10px 200px 10px", margin: "0 auto" }}>
                 {data.questions.length > 0 && data.questions.map((el: any, index: number) => <>

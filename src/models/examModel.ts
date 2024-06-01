@@ -12,11 +12,15 @@ const examSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
-        topic: {
+        topicName: {
             type: String,
             required: true,
         },
-        topicIdStr: {
+        topicSlug: {
+            type: String,
+            required: true,
+        },
+        description: {
             type: String,
             required: true,
         }

@@ -29,7 +29,7 @@ const Section = () => {
   const fetchInit = async () => {
     try {
       dispatch(SetLoading(true));
-      const response = await axios.get(`/api/exams?topicIdStr=${id}`);
+      const response = await axios.get(`/api/exams?topicSlug=${id}`);
   
       let dataTemp = response.data.rs;
       for (let examDataItem of dataTemp) {
@@ -62,7 +62,7 @@ const Section = () => {
 
   return (
     <>{exams && exams.length > 0 && <>
-      <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={onClickBack} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>{exams[0]?.topic}</h3></div>
+      <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={onClickBack} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>{exams[0]?.topicName}</h3></div>
       <Row gutter={[16, 24]}>
 
         {exams.map((el) => <>

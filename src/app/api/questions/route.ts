@@ -34,13 +34,9 @@ export async function PUT(request: NextRequest) {
   try {
     const reqBody = await request.json();
 
-    // check if user already exists
-
-
-
 
     const { _id: idToUpdate, ...restBody } = reqBody
-    console.log("to updatttttttttttttttte", idToUpdate, restBody)
+
     const rs = await Question.findOneAndUpdate({ _id: idToUpdate }, restBody, { new: true });
 
     return NextResponse.json(

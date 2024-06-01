@@ -11,10 +11,10 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json();
 
 
-
-    await Exam.create(reqBody);
+    console.log(reqBody)
+    const rs = await Exam.create(reqBody);
     return NextResponse.json(
-      { message: "Exam created successfully", success: true },
+      { message: "Exam created successfully", rs: rs, success: true },
       { status: 201 }
     );
   } catch (error: any) {
@@ -27,11 +27,11 @@ export async function GET(request: NextRequest) {
   try {
 
     const { searchParams } = new URL(request.url);
-    const topicIdStrPar = searchParams.get("topicIdStr");
+    const topicIdStrPar = searchParams.get("topicSlug");
 
     const examPL = [{
       $match: {
-        topicIdStr: topicIdStrPar,
+        topicSlug: topicIdStrPar,
       }
     },
     {

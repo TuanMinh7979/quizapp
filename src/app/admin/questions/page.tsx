@@ -13,7 +13,7 @@ const page = () => {
   const [exams, setExams] = useState<any[any]>([]); // State lưu trữ danh sách sinh viên
   const [mode, setMode] = useState("add");
   // imgLink can be url(update), base64 (add)
-  const [newQuestion, setNewQuestion] = useState({ _id: '', rightLbl: '', examId: '', imgLink: '', videoLink: '' }); // State lưu trữ thông tin sinh viên mới
+  const [newQuestion, setNewQuestion] = useState({ _id: '', rightLbl: '', examId: '', imgLink: '', videoLink: '', note: '' }); // State lưu trữ thông tin sinh viên mới
   const addQuestionService = async () => {
     try {
       dispatch(SetLoading(true));
@@ -57,7 +57,7 @@ const page = () => {
   }
   const onClickReset = () => {
     setMode("add")
-    setNewQuestion({ ...newQuestion, _id: '', rightLbl: '', imgLink: '', videoLink: '', examId: exams[0]._id })
+    setNewQuestion({ ...newQuestion, _id: '', rightLbl: '', imgLink: '', videoLink: '', note: '', examId: exams[0]._id })
   }
   const deleteQuestionService = async (id: string) => {
     try {
@@ -79,7 +79,7 @@ const page = () => {
       const eRs = await axios.get(`/admin/api/exams`);
       let examList = eRs.data.examList;
       setExams(examList);
-   
+
       if (examList.length > 0) {
         setNewQuestion({ ...newQuestion, examId: examList[0]._id })
         const qRs = await axios.get(`/admin/api/questions/${examList[0].name}`);
@@ -117,8 +117,12 @@ const page = () => {
     let findedExam = exams.find((el: any) => el._id == event.target.value)
     fetchWhenChangeExamName(findedExam.name)
   }
-  const onVideoLinkChange = (event: any) => {
-    setNewQuestion({ ...newQuestion, videoLink: event.target.value })
+  // const onVideoLinkChange = (event: any) => {
+  //   setNewQuestion({ ...newQuestion, videoLink: event.target.value })
+  // }
+
+  const onQuestionFieldChange = (event: any) => {
+    setNewQuestion({ ...newQuestion, [event.target.name]: event.target.value })
   }
   const disableWhenEdit = () => {
     return mode == "edit"
@@ -180,7 +184,11 @@ const page = () => {
             </div>
             <div>
               <label >Video Link:</label>
-              <input type="text" disabled={disableWhenEdit()} onChange={onVideoLinkChange} value={newQuestion.videoLink} />
+              <input type="text" disabled={disableWhenEdit()} name="videoLink" onChange={onQuestionFieldChange} value={newQuestion.videoLink} />
+            </div>
+            <div>
+              <label >Note:</label>
+              <textarea onChange={onQuestionFieldChange} name="note" value={newQuestion.note} />
             </div>
           </form>
         </div>

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
 import AnswerModal from '@/components/AnswerModal';
+import NoteModal from '@/components/NoteModal';
 const changeKeys = (oldKey: string, newKey: string, lst: any[]) => {
     return lst.map(obj => {
         const { [oldKey]: value, ...rest } = obj;
@@ -88,26 +89,41 @@ const Exam = () => {
         }
         setExamTry([...tmpExamTry])
     };
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAnswerModalOpen, setIsAnswerModalOpen] = useState(false);
     const [answerModalData, setAnswerModalData] = useState("")
     const showAnswerModal = (dataToOpen: any) => {
 
         setAnswerModalData(dataToOpen)
-        setIsModalOpen(true);
+        setIsAnswerModalOpen(true);
     };
     const handleModalBtns = () => {
         setAnswerModalData("");
-        setIsModalOpen(false);
+        setIsAnswerModalOpen(false);
+    };
+
+
+    // 
+    const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
+    const [noteModalData, setNoteModalData] = useState("")
+    const showNoteModal = (dataToOpen: any) => {
+
+        setNoteModalData(dataToOpen)
+        setIsNoteModalOpen(true);
+    };
+    const handleNoteModalBtns = () => {
+        setNoteModalData("");
+        setIsNoteModalOpen(false);
     };
 
     return (
         <>{data && <>
-            {answerModalData && <AnswerModal answerModalData={answerModalData} isModalOpen={isModalOpen} handleModalBtns={handleModalBtns} ></AnswerModal>}
+            {answerModalData && <AnswerModal answerModalData={answerModalData} isAnswerModalOpen={isAnswerModalOpen} handleModalBtns={handleModalBtns} ></AnswerModal>}
+            {noteModalData && <NoteModal noteModalData={noteModalData} isNoteModalOpen={isNoteModalOpen} handleModalBtns={handleNoteModalBtns} ></NoteModal>}
             <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={() => onClickBack(data.topicSlug)} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3> {data.topicName + ` > `}{data.name}</h3></div>
             <ControlBtns onSave={onSave} />
             <div style={{ width: "90%", border: "1px solid gray", padding: "10px 10px 200px 10px", margin: "0 auto" }}>
                 {data.questions.length > 0 && data.questions.map((el: any, index: number) => <>
-                    <QuestionCard note={el.note} videoLink={el.videoLink} showAnswerModal={showAnswerModal} eAnsLbl={el.eAnsLbl} changeAns={changeAns} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCard>
+                    <QuestionCard imgLink={el.imgLink} note={el.note} videoLink={el.videoLink} showNoteModal={showNoteModal} showAnswerModal={showAnswerModal} eAnsLbl={el.eAnsLbl} changeAns={changeAns} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCard>
                 </>)}
             </div>
             <ControlBtns onSave={onSave} />

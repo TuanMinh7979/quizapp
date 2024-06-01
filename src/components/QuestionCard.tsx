@@ -19,7 +19,7 @@ const QuestionCard = (props: any) => {
                 <div style={{ marginLeft: '60%', display: "flex", gap: "10%" }}>
 
 
-                    {props.note && <InfoCircleOutlined className='info-icon' style={{ color: "blue" }} />}
+                    {props.note && <InfoCircleOutlined onClick={() => props.showNoteModal(props.note)} className='info-icon' style={{ color: "blue" }} />}
 
 
                     <button onClick={() => {
@@ -31,8 +31,8 @@ const QuestionCard = (props: any) => {
                 </div>
             </h3>
             <div style={{ margin: "0 auto" }}>
-                <img style={{ objectFit: "contain", width: "1000px", height: "300px" }}
-                    src="https://drive.google.com/thumbnail?id=1fJRPZiBLklYmiwjI4W3c5VJp9ErHPkJX&sz=w1000" alt="" />
+                <img style={{ objectFit: "contain", width: "1000px", height: "100%" }}
+                    src={props.imgLink} alt="" />
             </div>
             <div style={{ width: "80%", margin: "0 auto", display: "flex", justifyContent: 'center' }}>
                 <div style={{ flex: "1", display: "flex", justifyContent: 'flex-start' }}>

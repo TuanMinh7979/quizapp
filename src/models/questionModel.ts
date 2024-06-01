@@ -11,6 +11,9 @@ const questionSchema = new mongoose.Schema(
         videoLink: {
             type: String,
         },
+        note: {
+            type: String,
+        },
         examId: { type: mongoose.Schema.Types.ObjectId, ref: 'Exam' },
     }
 );

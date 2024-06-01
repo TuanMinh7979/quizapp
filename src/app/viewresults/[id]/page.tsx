@@ -11,6 +11,7 @@ import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
 import QuestionCardForView from '@/components/QuestionCardForView';
 import AnswerModal from '@/components/AnswerModal';
+import NoteModal from '@/components/NoteModal';
 const ViewResult = () => {
     // id is Exam.name or code
     const { currentUser } = useSelector((state: any) => state.users);
@@ -49,29 +50,41 @@ const ViewResult = () => {
     useEffect(() => {
         fetchInit()
     }, [])
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalData, setModalData] = useState("")
-    const showModal = (dataToOpen: any) => {
-   
-        setModalData(dataToOpen)
-        setIsModalOpen(true);
+    const [isAnswerModalOpen, setIsAnswerModalOpen] = useState(false);
+    const [answerModalData, setAnswerModalData] = useState("")
+    const showAnswerModal = (dataToOpen: any) => {
+
+        setAnswerModalData(dataToOpen)
+        setIsAnswerModalOpen(true);
     };
-    const handleOk = () => {
-        setModalData("");
-        setIsModalOpen(false);
+    const handleModalBtns = () => {
+        setAnswerModalData("");
+        setIsAnswerModalOpen(false);
     };
-    const handleCancel = () => {
-        setModalData("");
-        setIsModalOpen(false);
+
+
+    // 
+    const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
+    const [noteModalData, setNoteModalData] = useState("")
+    const showNoteModal = (dataToOpen: any) => {
+
+        setNoteModalData(dataToOpen)
+        setIsNoteModalOpen(true);
     };
+    const handleNoteModalBtns = () => {
+        setNoteModalData("");
+        setIsNoteModalOpen(false);
+    };
+    
     return (
         <>{data && <>
-            {modalData && <AnswerModal modalData={modalData} isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></AnswerModal>}
+            {answerModalData && <AnswerModal answerModalData={answerModalData} isAnswerModalOpen={isAnswerModalOpen} handleModalBtns={handleModalBtns} ></AnswerModal>}
+            {noteModalData && <NoteModal noteModalData={noteModalData} isNoteModalOpen={isNoteModalOpen} handleModalBtns={handleNoteModalBtns} ></NoteModal>}
             <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={() => onClickBack(data.topicSlug)} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3> {data.topicName + ` > `}{data.name}</h3></div>
             <ControlBtns />
             <div style={{ width: "90%", border: "1px solid gray", padding: "10px 10px 200px 10px", margin: "0 auto" }}>
                 {data.questions.length > 0 && data.questions.map((el: any, index: number) => <>
-                    <QuestionCardForView videoLink={el.videoLink} showModal={showModal} eAnsLbl={el.eAnsLbl} changeAns={() => { }} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCardForView>
+                    <QuestionCardForView note={el.note} imgLink={el.imgLink} showNoteModal={showNoteModal} videoLink={el.videoLink} showAnswerModal={showAnswerModal} eAnsLbl={el.eAnsLbl} changeAns={() => { }} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCardForView>
                 </>)}
             </div>
             <ControlBtns />

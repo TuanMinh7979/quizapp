@@ -1,15 +1,9 @@
-import { Row } from 'antd'
+
 import React, { useState } from 'react'
-interface PropsType {
-    rightLbl: string;
-    id: string;
-    order: number,
-    changeAns: Function;
-    eAnsLbl: string;
-    videoLink: string;
-    showModal: Function;
-}
-const QuestionCardForView = (props: PropsType) => {
+import {
+    InfoCircleOutlined
+} from '@ant-design/icons'
+const QuestionCardForView = (props: any) => {
     const [selectedAns, setSelectedAns
     ] = useState(props.eAnsLbl ? props.eAnsLbl : '');
     return (
@@ -17,12 +11,14 @@ const QuestionCardForView = (props: PropsType) => {
             <h3 style={{ width: "100%", display: "flex", justifyContent: "space-between" }}><span>
                 <span style={{ color: "blue", fontWeight: "bold" }}>{props.order + 1}</span>
                 &nbsp; &nbsp;  <span style={{ color: "#6d6d75", fontSize: "10px" }}>ID:{props.id}</span></span>
+               
                 <div style={{ marginLeft:'60%' ,display: "flex", gap: "10%"}}>
+                {props.note && <InfoCircleOutlined onClick={() => props.showNoteModal(props.note)} className='info-icon' style={{ color: "blue" }} />}
                     <button onClick={() => {
                         window.open(`${props.videoLink}&autoplay=1`, '_blank');
                     }}>Solution</button>
                     <button onClick={() => {
-                        props.showModal(`${props.videoLink}&autoplay=1`, '_blank');
+                        props.showAnswerModal(`${props.videoLink}&autoplay=1`, '_blank');
                     }}>Watch Solution</button>
                 </div>
                 &nbsp;&nbsp; {props.eAnsLbl == props.rightLbl ?
@@ -31,7 +27,7 @@ const QuestionCardForView = (props: PropsType) => {
                         <span style={{ padding: "2px", background: "orange", color: "white" }}>Wrong</span>}
             </h3>
             <div style={{ margin: "0 auto" }}>
-                <img style={{ objectFit: "cover", width: "1000px", height: "300px" }} src="https://i.ex-cdn.com/giadinhmoi.vn/files/news/2022/07/07/de-thi-mon-toan-tot-nghiep-thpt-quoc-gia-2022-tat-ca-ma-de-day-du-nhat-164634.jpg" alt="" />
+                <img style={{ objectFit: "cover", width: "1000px", height: "300px" }} src={props.imgLink} alt="" />
             </div>
             <div style={{ width: "80%", margin: "0 auto", display: "flex", justifyContent: 'center' }}>
                 <div style={{ flex: "1", display: "flex", justifyContent: 'flex-start' }}>

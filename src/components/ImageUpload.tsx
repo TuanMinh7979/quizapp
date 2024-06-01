@@ -18,7 +18,7 @@ export function readAsBase64(file: any) {
     return fileValue;
 }
 const ImageUpload = (props: any) => {
-    console.log("PROPS", props)
+
     const [avatar, setAvatar] = useState<any>(props.imgLinkToShow)
 
     const hdlChangeFile = async (e: any) => {
@@ -36,7 +36,7 @@ const ImageUpload = (props: any) => {
     useEffect(() => {
         setAvatar(props.imgLinkToShow)
     }, [props.imgLinkToShow])
-    console.log(props.mode)
+
     return (
         <div className="info_avatar">
             <img

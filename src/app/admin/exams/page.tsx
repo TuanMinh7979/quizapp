@@ -32,7 +32,7 @@ const page = () => {
       const response = await axios.post("/api/exams", { ...restBody });
 
 
-      console.log(response.data.rs)
+
       message.success(response.data.message);
       setExams([...exams, response.data.rs])
       dispatch(SetLoading(false));
@@ -91,7 +91,7 @@ const page = () => {
       setTopics(topicLs);
 
 
-      console.log(topicLs)
+   
 
 
       const examRs = await axios.get(`/admin/api/examsbytopic?topicSlug=${topicLs[0].slug}`);

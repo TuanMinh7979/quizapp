@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json();
 
 
-    console.log(reqBody)
+
     const rs = await Exam.create(reqBody);
     return NextResponse.json(
       { message: "Exam created successfully", rs: rs, success: true },

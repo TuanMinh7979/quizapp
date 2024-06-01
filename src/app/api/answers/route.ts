@@ -10,8 +10,7 @@ connectDB();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    console.log(reqBody.toAddList)
-    console.log(reqBody.toUpdateList)
+
     await Answer.insertMany(reqBody.toAddList);
 
     for (let el of reqBody.toUpdateList) {

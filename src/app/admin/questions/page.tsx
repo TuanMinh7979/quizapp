@@ -24,9 +24,9 @@ const page = () => {
 
     try {
       dispatch(SetLoading(true));
-      console.log(newQuestion)
+     
       const response = await axios.post("/api/questions", { ...newQuestion });
-      console.log(response.data.rs)
+
       message.success(response.data.message);
       setQuestions([...questions, response.data.rs])
       dispatch(SetLoading(false));
@@ -51,7 +51,7 @@ const page = () => {
       dispatch(SetLoading(true));
 
       const response = await axios.put("/api/questions", { _id: newQuestion._id, rightLbl: newQuestion.rightLbl });
-      console.log(response.data.rs)
+
       message.success(response.data.message);
       let temp = questions.map((el: any) => {
         if (el._id == response.data.rs._id) {
@@ -135,7 +135,7 @@ const page = () => {
       const examFinded = exams.find((el: any) => el._id == newQuestion.examId)
       const qRs = await axios.get(`/admin/api/questions/${nameOfExam}`);
       let qsList = qRs.data.questionList;
-      console.log(qsList)
+    
       setQuestions(qsList);
       dispatch(SetLoading(false));
     } catch (error: any) {

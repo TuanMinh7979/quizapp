@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     try {
 
         const examList = await Exam.find();
-        console.log(examList[0])
+
         const questionList = await Question.find({ examId: examList[0]._id });
         return NextResponse.json(
             { questionList, examList },

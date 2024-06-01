@@ -52,7 +52,7 @@ export async function uploadFromBase64(fileName: String, base64Str: String) {
             },
         })
 
-        // console.log(createdFile.data.id)
+
 
         return createdFile.data.id
 

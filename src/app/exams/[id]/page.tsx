@@ -118,7 +118,7 @@ const Exam = () => {
 
     const [modalData, setModalData] = useState("")
     const showModal = (dataToOpen: any) => {
-        console.log(dataToOpen)
+  
         setModalData(dataToOpen)
         setIsModalOpen(true);
     };

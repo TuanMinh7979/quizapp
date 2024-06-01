@@ -45,8 +45,12 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
     if (pathname !== "/login" && !currentUser) {
       getCurrentUser();
     }
-   
-  
+
+    if (pathname.startsWith("/admin") && (!currentUser || !currentUser.isAdmin)) {
+      router.push("/")
+    }
+
+
   }, [pathname]);
   const onLogout = async () => {
     try {
@@ -72,13 +76,13 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       router.push("/");
     }
   };
-const getSelectedKeys=()=>{
-  if (pathname.startsWith("/admin")) {
-    return['2']
-  } else {
-    return['1']
+  const getSelectedKeys = () => {
+    if (pathname.startsWith("/admin")) {
+      return ['2']
+    } else {
+      return ['1']
+    }
   }
-}
   const getItemsMenu = () => {
     if (currentUser.isAdmin) {
       return [

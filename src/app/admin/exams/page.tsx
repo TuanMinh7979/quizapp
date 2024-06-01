@@ -6,6 +6,7 @@ import axios from 'axios';
 import { message } from 'antd';
 import ImageUpload from '@/components/ImageUpload';
 import ExamTableItem from './ExamTableItem';
+import Link from 'next/link';
 const page = () => {
   const dispatch = useDispatch()
   const [exams, setExams] = useState<any[any]>([]);
@@ -55,10 +56,16 @@ const page = () => {
       const rs = await axios.get(`/api/topics`);
       let topicLs = rs.data.topicList;
       setTopics(topicLs);
-   
-      const examRs = await axios.get(`/admin/api/examsbytopic?topicSlug=${topicLs[0].slug}`);
-      let examLs = examRs.data.examList;
-      setExams(examLs);
+
+
+     
+      if (topicLs.length > 0) {
+        setNewExam({...newExam, topicName:topicLs[0].name, topicSlug:topicLs[0].slug})
+        const examRs = await axios.get(`/admin/api/examsbytopic?topicSlug=${topicLs[0].slug}`);
+        let examLs = examRs.data.examList;
+        setExams(examLs);
+      }
+
       dispatch(SetLoading(false));
     } catch (error: any) {
       dispatch(SetLoading(false));
@@ -66,10 +73,10 @@ const page = () => {
       message.error(error.message);
     }
   };
-  const fetchWhenChangeExamName = async () => {
+  const fetchWhenChangeExamName = async (newTopicSlug: string) => {
     try {
       dispatch(SetLoading(true));
-      const examRs = await axios.get(`/admin/api/examsbytopic?topicSlug=${newExam.topicSlug}`);
+      const examRs = await axios.get(`/admin/api/examsbytopic?topicSlug=${newTopicSlug}`);
       let examLs = examRs.data.examList;
       setExams(examLs);
       dispatch(SetLoading(false));
@@ -82,13 +89,12 @@ const page = () => {
   useEffect(() => {
     fetchInit()
   }, [])
-  useEffect(() => {
-    fetchWhenChangeExamName()
-  }, [newExam.topicSlug])
+
   const onTopicSelectionName = (event: any) => {
     const topicFinded = topics.find((el: any) => el.slug == event.target.value)
     if (topicFinded) {
       setNewExam({ ...newExam, topicName: topicFinded.name, topicSlug: topicFinded.slug })
+      fetchWhenChangeExamName(event.target.value)
     }
   }
   const disableWhenEdit = () => {
@@ -136,6 +142,8 @@ const page = () => {
       </div>
       <div className="table-container" style={{ flex: 2, }}>
         <h2>List {exams.length}</h2>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>   <Link href={"/admin/questions"} ><span style={{ color: "blue" }}>To Question</span></Link></div>
+
         <table style={{ width: "100%" }}>
           <thead>
             <tr>
@@ -145,7 +153,7 @@ const page = () => {
             </tr>
           </thead>
           <tbody>
-            {exams.map((item: any, index: number) => (
+            {exams && exams.length && exams.map((item: any, index: number) => (
               <ExamTableItem
                 key={index}
                 exam={item}

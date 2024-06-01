@@ -6,6 +6,7 @@ import axios from 'axios';
 import { message } from 'antd';
 import ImageUpload from '@/components/ImageUpload';
 import QuestionTableItem from './QuestionTableItem';
+import Link from 'next/link';
 const page = () => {
   const dispatch = useDispatch()
   const [questions, setQuestions] = useState<any[any]>([]); // State lưu trữ danh sách sinh viên
@@ -16,10 +17,13 @@ const page = () => {
   const addQuestionService = async () => {
     try {
       dispatch(SetLoading(true));
-     
-      const response = await axios.post("/api/questions", { ...newQuestion });
+
+      const { _id: eid, ...restBody } = newQuestion
+
+      const response = await axios.post("/api/questions", { ...restBody });
       message.success(response.data.message);
       setQuestions([...questions, response.data.rs])
+
       dispatch(SetLoading(false));
     } catch (error: any) {
       console.log(error)
@@ -53,7 +57,7 @@ const page = () => {
   }
   const onClickReset = () => {
     setMode("add")
-    setNewQuestion({ ...newQuestion, _id: '', rightLbl: '', imgLink: '', videoLink: '', examId: '' })
+    setNewQuestion({ ...newQuestion, _id: '', rightLbl: '', imgLink: '', videoLink: '', examId: exams[0]._id })
   }
   const deleteQuestionService = async (id: string) => {
     try {
@@ -74,10 +78,15 @@ const page = () => {
       dispatch(SetLoading(true));
       const eRs = await axios.get(`/admin/api/exams`);
       let examList = eRs.data.examList;
-      const qRs = await axios.get(`/admin/api/questions/${examList[0].name}`);
-      let qsList = qRs.data.questionList;
-      setQuestions(qsList);
       setExams(examList);
+   
+      if (examList.length > 0) {
+        setNewQuestion({ ...newQuestion, examId: examList[0]._id })
+        const qRs = await axios.get(`/admin/api/questions/${examList[0].name}`);
+        let qsList = qRs.data.questionList;
+        setQuestions(qsList);
+      }
+
       dispatch(SetLoading(false));
     } catch (error: any) {
       console.log(error)
@@ -88,10 +97,10 @@ const page = () => {
   const fetchWhenChangeExamName = async (nameOfExam: string) => {
     try {
       dispatch(SetLoading(true));
-      const examFinded = exams.find((el: any) => el._id == newQuestion.examId)
+
       const qRs = await axios.get(`/admin/api/questions/${nameOfExam}`);
       let qsList = qRs.data.questionList;
-    
+
       setQuestions(qsList);
       dispatch(SetLoading(false));
     } catch (error: any) {
@@ -127,7 +136,10 @@ const page = () => {
     <> {
       exams.length > 0 && <div className="App" style={{ display: "flex", width: "100%", }}>
         <div className="form-container" style={{ flex: 1, }}>
-          <h2>New Question</h2>
+          <h2>New Question
+
+
+          </h2>
           <form>
             <div>
               <label htmlFor="name">ID:</label>
@@ -174,6 +186,7 @@ const page = () => {
         </div>
         <div className="table-container" style={{ flex: 2, }}>
           <h2>List {questions.length}</h2>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>   <Link href={"/admin/exams"} ><span style={{ color: "blue" }}>To Exam</span></Link></div>
           <table style={{ width: "100%" }}>
             <thead>
               <tr>
@@ -184,7 +197,7 @@ const page = () => {
               </tr>
             </thead>
             <tbody>
-              {questions.map((item: any, index: number) => (
+              {questions && questions.length > 0 && questions.map((item: any, index: number) => (
                 <QuestionTableItem
                   key={index}
                   question={item}

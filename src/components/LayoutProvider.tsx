@@ -43,7 +43,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   useEffect(() => {
     if (pathname !== "/login" && !currentUser) {
-      getCurrentUser();
+       getCurrentUser();
     }
 
     if (pathname.startsWith("/admin") && (!currentUser || !currentUser.isAdmin)) {

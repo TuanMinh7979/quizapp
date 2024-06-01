@@ -19,11 +19,12 @@ export async function POST(request: NextRequest) {
         if (reqBody.password !== user.password) {
             throw new Error("Invalid password");
         }
-        
+
         const dataToBeSigned = {
             userId: user._id,
             username: user.username,
-          };
+            isAdmin: user.isAdmin
+        };
         const token = jwt.sign(dataToBeSigned, process.env.jwt_secret!, {
             expiresIn: "1d",
         });

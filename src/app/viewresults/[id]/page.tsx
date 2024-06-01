@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
 import QuestionCardForView from '@/components/QuestionCardForView';
+import AnswerModal from '@/components/AnswerModal';
 
 
 
@@ -50,7 +51,7 @@ const ViewResult = () => {
             }
             setData(response.data.rs);
 
-          
+
         } catch (error: any) {
             message.error(error.message);
         } finally {
@@ -62,7 +63,13 @@ const ViewResult = () => {
         fetchInit()
     }, [])
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+   
 
 
 
@@ -71,11 +78,13 @@ const ViewResult = () => {
     return (
         <>{data && <>
 
+            {isModalOpen &&
+                <AnswerModal></AnswerModal>}
             <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={() => onClickBack(data.topicIdStr)} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3> {data.topic + ` > `}{data.name}</h3></div>
             <ControlBtns />
             <div style={{ width: "90%", border: "1px solid gray", padding: "10px 10px 200px 10px", margin: "0 auto" }}>
                 {data.questions.length > 0 && data.questions.map((el: any, index: number) => <>
-                    <QuestionCardForView eAnsLbl={el.eAnsLbl} changeAns={()=>{}} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCardForView>
+                    <QuestionCardForView eAnsLbl={el.eAnsLbl} changeAns={() => { }} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCardForView>
                 </>)}
             </div>
             <ControlBtns />

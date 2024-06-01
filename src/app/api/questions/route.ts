@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Question from "@/models/questionModel";
 import { uploadFromBase64 } from "@/utils/utils";
 import mongoose from "mongoose";
+import Answer from "@/models/answerModel";
 
 
 connectDB();

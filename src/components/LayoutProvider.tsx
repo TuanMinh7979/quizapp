@@ -20,7 +20,7 @@ interface UserType {
   _id: string;
 };
 function LayoutProvider({ children }: { children: React.ReactNode }) {
-  const { currentUser }: { currentUser: UserType } = useSelector((state: any) => state.users);
+  const { currentUser } = useSelector((state: any) => state.users);
   const { loading } = useSelector((state: any) => state.loaders);
 
   const router = useRouter();
@@ -48,6 +48,10 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
 
       getCurrentUser();
     }
+   
+  
+
+
   }, [pathname]);
   const onLogout = async () => {
     try {
@@ -76,6 +80,58 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       router.push("/");
     }
   };
+
+
+
+const getSelectedKeys=()=>{
+  if (pathname.startsWith("/admin")) {
+    return['2']
+  } else {
+    return['1']
+  }
+}
+
+
+  const getItemsMenu = () => {
+    if (currentUser.isAdmin) {
+      return [
+
+        {
+          key: '1',
+          icon: <VideoCameraOutlined />,
+          label: 'Test',
+        },
+        {
+          key: '2',
+          icon: <VideoCameraOutlined />,
+          label: 'Admin',
+
+        },
+        {
+          key: 'logout',
+          icon: <VideoCameraOutlined />,
+          label: 'Logout',
+          danger: true,
+        },
+
+      ]
+    } else {
+      return [
+        {
+          key: '1',
+          icon: <VideoCameraOutlined />,
+          label: 'Test',
+        },
+
+        {
+          key: 'logout',
+          icon: <VideoCameraOutlined />,
+          label: 'Logout',
+          danger: true,
+        },
+      ]
+    }
+  }
   return (
     <html lang="en">
       <head>
@@ -107,29 +163,9 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                     onClick={onClick}
                     theme="dark"
                     mode="inline"
-                    defaultSelectedKeys={['1']}
+                    defaultSelectedKeys={getSelectedKeys()}
 
-                    items={[
-
-                      {
-                        key: '1',
-                        icon: <VideoCameraOutlined />,
-                        label: 'Test',
-                      },
-                      {
-                        key: '2',
-                        icon: <VideoCameraOutlined />,
-                        label: 'Admin',
-                        danger: true,
-                      },
-                      {
-                        key: 'logout',
-                        icon: <VideoCameraOutlined />,
-                        label: 'Logout',
-                        danger: true,
-                      },
-
-                    ]}
+                    items={getItemsMenu()}
                   />
 
                 </Sider>

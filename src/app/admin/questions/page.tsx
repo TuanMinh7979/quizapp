@@ -1,12 +1,12 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import Student from './QuestionTable';
+import Student from './QuestionTableItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
 import { message } from 'antd';
-import QuestionTable from './QuestionTable';
 import ImageUpload from '@/components/ImageUpload';
+import QuestionTableItem from './QuestionTableItem';
 const page = () => {
   const dispatch = useDispatch()
 
@@ -50,7 +50,7 @@ const page = () => {
       try {
         dispatch(SetLoading(true));
 
-        const response = await axios.put("/api/questions", { _id: newQuestion._id, examId: examFinded._id, });
+        const response = await axios.put("/api/questions", { _id: newQuestion._id, rightLbl: newQuestion.rightLbl, examId: examFinded._id, });
         console.log(response.data.rs)
         message.success(response.data.message);
         let temp = questions.map((el: any) => {
@@ -71,10 +71,8 @@ const page = () => {
 
 
   const onEditClick = (stu: any) => {
-
     setMode("edit")
     setNewQuestion(stu)
-    console.log(stu)
 
   }
 
@@ -83,11 +81,23 @@ const page = () => {
     setNewQuestion({ ...newQuestion, _id: '', rightLbl: '', imgLink: '', videoLink: '' })
 
   }
-  // Hàm xóa sinh viên
-  const deleteQuestionService = (id: number) => {
-    const updatedStudents = [...questions];
-    updatedStudents.splice(id, 1);
-    setQuestions(updatedStudents);
+
+  const deleteQuestionService = async (id: string) => {
+    try {
+      dispatch(SetLoading(true));
+      const rs = await axios.delete(`/api/questions/${id}`)
+      const newQuestionsList = [...questions].filter((el: any) => el._id !== id);
+      setQuestions(newQuestionsList)
+      dispatch(SetLoading(false));
+
+    } catch (error: any) {
+      message.error(error.response.data.message || "Something went wrong");
+    } finally {
+      dispatch(SetLoading(false));
+    }
+
+
+
   };
 
 
@@ -103,7 +113,7 @@ const page = () => {
       let qsList = qRs.data.questionList;
 
 
-      console.log(qsList)
+
       setQuestions(qsList);
       setExams(examList);
       setSelectedExamName(examList[0].name)
@@ -247,7 +257,7 @@ const page = () => {
           </thead>
           <tbody>
             {questions.map((item: any, index: number) => (
-              <QuestionTable
+              <QuestionTableItem
                 key={index}
                 question={item}
 

@@ -57,7 +57,7 @@ export async function uploadFromBase64(fileName: String, base64Str: String) {
         return createdFile.data.id
 
     } catch (error: any) {
-        console.log("---------------------)())(", error)
+        console.log(error)
         throw Error("Upload filed")
     }
 }
@@ -81,10 +81,12 @@ export async function deleteFile(id: string) {
         const del = await drive.files.delete({
             fileId: id
         })
-        console.log(">>>>>>>>>>>>>>>>", del)
+
         return del
 
     } catch (error: any) {
         throw Error("Delete filed")
     }
 }
+
+

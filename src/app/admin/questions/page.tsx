@@ -6,6 +6,7 @@ import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
 import { message } from 'antd';
 import QuestionTable from './QuestionTable';
+import ImageUpload from '@/components/ImageUpload';
 const page = () => {
   const dispatch = useDispatch()
 
@@ -15,7 +16,8 @@ const page = () => {
   const [questions, setQuestions] = useState<any[any]>([]); // State lưu trữ danh sách sinh viên
   const [exams, setExams] = useState<any[any]>([]); // State lưu trữ danh sách sinh viên
   const [mode, setMode] = useState("add");
-  const [newQuestion, setNewQuestion] = useState({ _id: '', rightLbl: '', examId: '' }); // State lưu trữ thông tin sinh viên mới
+  // imgLink can be url(update), base64 (add)
+  const [newQuestion, setNewQuestion] = useState({ _id: '', rightLbl: '', examId: '', imgLink: '', videoLink: '' }); // State lưu trữ thông tin sinh viên mới
 
   const addQuestionService = async () => {
     const examFinded = exams.find((el: any) => el.name == selectedExamName)
@@ -23,8 +25,8 @@ const page = () => {
     if (examFinded) {
       try {
         dispatch(SetLoading(true));
-
-        const response = await axios.post("/api/questions", { rightLbl: newQuestion.rightLbl, examId: examFinded._id });
+        console.log(newQuestion)
+        const response = await axios.post("/api/questions", { ...newQuestion, examId: examFinded._id });
         console.log(response.data.rs)
         message.success(response.data.message);
         setQuestions([...questions, response.data.rs])
@@ -48,7 +50,7 @@ const page = () => {
       try {
         dispatch(SetLoading(true));
 
-        const response = await axios.put("/api/questions", { ...newQuestion, examId: examFinded._id, });
+        const response = await axios.put("/api/questions", { _id: newQuestion._id, examId: examFinded._id, });
         console.log(response.data.rs)
         message.success(response.data.message);
         let temp = questions.map((el: any) => {
@@ -72,12 +74,14 @@ const page = () => {
 
     setMode("edit")
     setNewQuestion(stu)
+    console.log(stu)
 
   }
 
   const onClickReset = () => {
     setMode("add")
-    setNewQuestion({ ...newQuestion, _id: '', rightLbl: '', })
+    setNewQuestion({ ...newQuestion, _id: '', rightLbl: '', imgLink: '', videoLink: '' })
+
   }
   // Hàm xóa sinh viên
   const deleteQuestionService = (id: number) => {
@@ -85,7 +89,6 @@ const page = () => {
     updatedStudents.splice(id, 1);
     setQuestions(updatedStudents);
   };
-
 
 
   const fetchInit = async () => {
@@ -143,13 +146,37 @@ const page = () => {
     setNewQuestion({ ...newQuestion, examId: event.target.value })
     setSelectedExamName(event.target.value)
   }
+
+  const onVideoLinkChange = (event: any) => {
+    setNewQuestion({ ...newQuestion, videoLink: event.target.value })
+
+  }
+
+
+  const disableWhenEdit = () => {
+    return mode == "edit"
+  }
+
+
+
+  const validateToAddQuestion = () => {
+    return newQuestion.rightLbl == '' || newQuestion.imgLink == ''
+  }
+  const validateToUpdateQuestion = () => {
+    return false
+  }
+
+  const changeImgLinkToUp = (base64Str: any) => {
+    setNewQuestion({ ...newQuestion, imgLink: base64Str })
+
+  }
   return (
 
 
-    <div className="App" style={{ display: "flex", width: "100%", border: "1px solid red" }}>
+    <div className="App" style={{ display: "flex", width: "100%", }}>
 
 
-      <div className="form-container" style={{ flex: 1, border: "1px solid red" }}>
+      <div className="form-container" style={{ flex: 1, }}>
         <h2>New Question</h2>
         <form>
           <div>
@@ -181,16 +208,33 @@ const page = () => {
           </div>
           <div style={{ display: "flex", justifyContent: "flex-end", gap: "10%" }}>
             <button type="button" onClick={onClickReset}>Reset</button>
-            <button disabled={newQuestion.rightLbl ? false : true} type="button" onClick={mode == "add" ? addQuestionService : updateQuestionService}>{mode == "add" ? "Add" : "Update"}
-            </button>
+            {
+              mode == "add" && <button disabled={validateToAddQuestion()} type="button" onClick={addQuestionService} >
+
+                Add </button>
+            }
+            {
+              mode == "edit" && <button disabled={validateToUpdateQuestion()} type="button" onClick={updateQuestionService} >
+                Update </button>
+            }
+
 
           </div>
+          <div>
+            <label >Img Link:</label>
+            <ImageUpload mode={mode} imgLinkToShow={newQuestion.imgLink} changeBase64ToUp={changeImgLinkToUp} />
+          </div>
+          <div>
+            <label >Video Link:</label>
+            <input type="text" disabled={disableWhenEdit()} onChange={onVideoLinkChange} value={newQuestion.videoLink} />
+          </div>
+
 
 
         </form>
       </div>
 
-      <div className="table-container" style={{ flex: 2, border: "1px solid blue" }}>
+      <div className="table-container" style={{ flex: 2, }}>
         <h2>List {questions.length}</h2>
         <table style={{ width: "100%" }}>
           <thead>

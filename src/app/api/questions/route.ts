@@ -2,6 +2,7 @@ import { connectDB } from "@/config/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import Question from "@/models/questionModel";
 import { uploadFromBase64 } from "@/utils/utils";
+import mongoose from "mongoose";
 
 
 connectDB();
@@ -12,9 +13,11 @@ export async function POST(request: NextRequest) {
 
     // check if user already exists
 
+    const { ['imgLink']: base64Str, ...restBody } = reqBody
+    const randomObjectId = new mongoose.Types.ObjectId();
+    const idImg = await uploadFromBase64(randomObjectId.toString(), base64Str);
 
-
-    const rs = await Question.create(reqBody);
+    const rs = await Question.create({ ...reqBody, _id: randomObjectId, imgLink: process.env.drivePrefix + "?id=" + idImg + "&sz=w1000" });
 
     return NextResponse.json(
       { message: "Question created successfully", rs: rs, success: true },
@@ -36,7 +39,7 @@ export async function PUT(request: NextRequest) {
 
 
     const { _id: idToUpdate, ...restBody } = reqBody
-    console.log(idToUpdate, restBody)
+    console.log("to updatttttttttttttttte", idToUpdate, restBody)
     const rs = await Question.findOneAndUpdate({ _id: idToUpdate }, restBody, { new: true });
 
     return NextResponse.json(

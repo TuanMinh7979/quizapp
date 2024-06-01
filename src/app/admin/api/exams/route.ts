@@ -1,6 +1,5 @@
 import { connectDB } from "@/config/dbConfig";
 import Exam from "@/models/examModel";
-
 import { NextRequest, NextResponse } from "next/server";
 connectDB();
 export async function GET(request: NextRequest) {

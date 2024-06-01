@@ -1,11 +1,9 @@
 import React from 'react';
-
 const QuestionTableItem = (props:any) => {
     const { question, deleteQuestion, setSelectedQuestion } = props
     const handleClickEdit = () => {
         setSelectedQuestion(question); // Cập nhật state khi click "Sửa"
     };
-
     return (
         <tr>
             <td>{question._id}</td>
@@ -18,5 +16,4 @@ const QuestionTableItem = (props:any) => {
         </tr>
     );
 };
-
 export default QuestionTableItem;

@@ -15,23 +15,18 @@ export const validateJWT = async (request: NextRequest) => {
         throw new Error(error.message);
     }
 };
-
-
 export async function uploadFromBase64(fileName: String, base64Str: String) {
     try {
         const clientId = process.env.client_id
         const clientSecret = process.env.client_secret
         const rfToken = process.env.rf_token
         const folderId: string = <string>process.env.folder_id
-
         const oauthClient = new google.auth.OAuth2(clientId, clientSecret)
         oauthClient.setCredentials({ refresh_token: rfToken })
-
         const drive = google.drive({
             version: 'v3',
             auth: oauthClient
         })
-
         const buffer = Buffer.from(base64Str.split(',')[1], 'base64');
         const typeStr = await fileTypeFromBuffer(buffer);
         console.log(typeStr)
@@ -40,10 +35,8 @@ export async function uploadFromBase64(fileName: String, base64Str: String) {
             mimeType: typeStr?.mime,
             parents: [folderId],
         };
-
         var bufferStream = new stream.PassThrough();
         const toUp = bufferStream.end(Buffer.from(base64Str.split(',')[1], 'base64'));
-
         const createdFile = await drive.files.create({
             requestBody: fileMetadata,
             media: {
@@ -51,42 +44,28 @@ export async function uploadFromBase64(fileName: String, base64Str: String) {
                 body: toUp
             },
         })
-
-
-
         return createdFile.data.id
-
     } catch (error: any) {
         console.log(error)
         throw Error("Upload filed")
     }
 }
-
-
 export async function deleteFile(id: string) {
     try {
         const clientId = process.env.client_id
         const clientSecret = process.env.client_secret
         const rfToken = process.env.rf_token
-
-
         const oauthClient = new google.auth.OAuth2(clientId, clientSecret)
         oauthClient.setCredentials({ refresh_token: rfToken })
-
         const drive = google.drive({
             version: 'v3',
             auth: oauthClient
         })
-
         const del = await drive.files.delete({
             fileId: id
         })
-
         return del
-
     } catch (error: any) {
         throw Error("Delete filed")
     }
 }
-
-

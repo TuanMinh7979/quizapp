@@ -17,14 +17,10 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }
-
 export async function DELETE(request: NextRequest) {
     try {
-
         const reqBody = await request.json();
         const del = deleteFile(reqBody.id)
-
-
         return NextResponse.json(
             { message: "Image deleted successfully", success: true },
             { status: 201 }

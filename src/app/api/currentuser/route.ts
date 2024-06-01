@@ -1,15 +1,9 @@
 import { connectDB } from "@/config/dbConfig";
-
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
-
 connectDB();
-
 import jwt from "jsonwebtoken";
 import { validateJWT } from "@/utils/utils";
-
-
-
 export async function GET(request: NextRequest) {
   try {
     const userId = await validateJWT(request);

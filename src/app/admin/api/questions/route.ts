@@ -6,9 +6,7 @@ import Exam from "@/models/examModel";
 connectDB();
 export async function GET(request: NextRequest) {
     try {
-
         const examList = await Exam.find();
-
         const questionList = await Question.find({ examId: examList[0]._id });
         return NextResponse.json(
             { questionList, examList },
@@ -19,5 +17,3 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }
-
-

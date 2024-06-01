@@ -2,16 +2,10 @@ import { connectDB } from "@/config/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/userModel";
 import Exam from "@/models/examModel";
-
-
 connectDB();
-
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-
-
-
     const rs = await Exam.create(reqBody);
     return NextResponse.json(
       { message: "Exam created successfully", rs: rs, success: true },
@@ -21,14 +15,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
-
-
 export async function GET(request: NextRequest) {
   try {
-
     const { searchParams } = new URL(request.url);
     const topicIdStrPar = searchParams.get("topicSlug");
-
     const examPL = [{
       $match: {
         topicSlug: topicIdStrPar,
@@ -52,13 +42,11 @@ export async function GET(request: NextRequest) {
     },
     {
       $addFields: {
-
         questionCnt: { $size: '$questions' },
         answerCnt: { $size: '$answers' },
       },
     },
     ];
-
     const rs = await Exam.aggregate(examPL);
     // const rs = await Exam.find(filtersObject);
     return NextResponse.json(
@@ -69,6 +57,3 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
-
-
-

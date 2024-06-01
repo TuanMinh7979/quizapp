@@ -6,7 +6,6 @@
   width: 100%;
   overflow: scroll;
 }
-
 .body {
   width: 100%;
   padding: 0 10px;
@@ -15,7 +14,6 @@
   overflow-y: scroll;
   padding: 20px;
 }
-
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -26,7 +24,6 @@
   padding: 5px 20px;
   max-width: 250px;
 }
-
 .logo {
   display: flex;
   align-items: center;
@@ -34,24 +31,20 @@
   gap: 10px;
   margin-top: 15px;
 }
-
 .logo h1 {
   font-size: 20px;
   font-weight: bold;
   color: white;
 }
-
 .logo i {
   font-size: 20px;
   color: white;
 }
-
 .menu-items {
   display: flex;
   flex-direction: column;
   gap: 25px;
 }
-
 .menu-item {
   color: white;
   display: flex;
@@ -60,21 +53,17 @@
   cursor: pointer;
   padding: 7px 5px;
 }
-
 .menu-item i {
   font-size: 18px !important;
 }
-
 .menu-item span {
   font-size: 14px;
 }
-
 .active-menu-item {
   background-color: white !important;
   color: var(--primary) !important;
   border-radius: 4px;
 }
-
 .user-info {
   display: flex;
   gap: 10px;

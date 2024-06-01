@@ -1,5 +1,4 @@
 import { TopicType } from "./types";
-
 const data:TopicType[] = [
     {
        

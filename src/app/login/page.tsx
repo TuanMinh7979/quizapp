@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { useRouter } from "next/navigation";
 import React from 'react'
 import { useDispatch } from 'react-redux';
-
 const page = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -34,7 +33,6 @@ const page = () => {
       <div className="card p-5 w-450">
         <h1 className="text-xl">Learn Test Login</h1>
         <hr />
-
         <Form
           layout="vertical"
           className="flex flex-col gap-5"
@@ -43,22 +41,15 @@ const page = () => {
           <Form.Item label="Username" name="username">
             <input type="username" className="input" />
           </Form.Item>
-
           <Form.Item label="Password" name="password">
             <input type="password" className="input" />
           </Form.Item>
-
           <Button type="primary" htmlType="submit" block>
             Login
           </Button>
-
-
-
-
         </Form>
       </div>
     </div>
   )
 }
-
 export default page

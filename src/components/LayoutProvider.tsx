@@ -22,10 +22,8 @@ interface UserType {
 function LayoutProvider({ children }: { children: React.ReactNode }) {
   const { currentUser } = useSelector((state: any) => state.users);
   const { loading } = useSelector((state: any) => state.loaders);
-
   const router = useRouter();
   const dispatch = useDispatch();
-
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -45,13 +43,10 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   useEffect(() => {
     if (pathname !== "/login" && !currentUser) {
-
       getCurrentUser();
     }
    
   
-
-
   }, [pathname]);
   const onLogout = async () => {
     try {
@@ -66,13 +61,10 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       dispatch(SetLoading(false));
     }
   };
-
   const onClick: MenuProps['onClick'] = (e) => {
-
     if (e.key == 'logout') {
       onLogout()
     }
-
     if (e.key == '2') {
       router.push("/admin/questions");
     }
@@ -80,9 +72,6 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       router.push("/");
     }
   };
-
-
-
 const getSelectedKeys=()=>{
   if (pathname.startsWith("/admin")) {
     return['2']
@@ -90,12 +79,9 @@ const getSelectedKeys=()=>{
     return['1']
   }
 }
-
-
   const getItemsMenu = () => {
     if (currentUser.isAdmin) {
       return [
-
         {
           key: '1',
           icon: <VideoCameraOutlined />,
@@ -105,7 +91,6 @@ const getSelectedKeys=()=>{
           key: '2',
           icon: <VideoCameraOutlined />,
           label: 'Admin',
-
         },
         {
           key: 'logout',
@@ -113,7 +98,6 @@ const getSelectedKeys=()=>{
           label: 'Logout',
           danger: true,
         },
-
       ]
     } else {
       return [
@@ -122,7 +106,6 @@ const getSelectedKeys=()=>{
           icon: <VideoCameraOutlined />,
           label: 'Test',
         },
-
         {
           key: 'logout',
           icon: <VideoCameraOutlined />,
@@ -145,11 +128,9 @@ const getSelectedKeys=()=>{
           theme={{
             token: {
               colorPrimary: "blue",
-
             },
           }}
         >
-
           {loading && <Loader />}
           {pathname === "/login" ? (
             <div>{children}</div>
@@ -164,10 +145,8 @@ const getSelectedKeys=()=>{
                     theme="dark"
                     mode="inline"
                     defaultSelectedKeys={getSelectedKeys()}
-
                     items={getItemsMenu()}
                   />
-
                 </Sider>
                 <Layout>
                   <Header style={{ padding: 0, background: colorBgContainer }}>
@@ -181,7 +160,6 @@ const getSelectedKeys=()=>{
                         height: 64,
                       }}
                     />
-
                   </Header>
                   <Content
                     style={{
@@ -198,13 +176,9 @@ const getSelectedKeys=()=>{
               </Layout>
             )
           )}
-
-
         </ConfigProvider>
       </body>
     </html>
   );
 }
-
 export default LayoutProvider;
-

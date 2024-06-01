@@ -11,6 +11,5 @@ const loadersSlice = createSlice({
     },
   },
 });
-
 export const { SetLoading } = loadersSlice.actions;
 export default loadersSlice.reducer;

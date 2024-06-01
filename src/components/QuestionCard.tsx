@@ -1,33 +1,32 @@
-import { Row } from 'antd'
+
 import React, { useState } from 'react'
-interface PropsType {
-    rightLbl: string;
-    id: string;
-    order: number,
-    changeAns: Function;
-    eAnsLbl: string;
-    videoLink: string;
-    showModal: Function
-}
-const QuestionCard = (props: PropsType) => {
+import {
+    InfoCircleOutlined
+} from '@ant-design/icons'
+
+const QuestionCard = (props: any) => {
     const [selectedAns, setSelectedAns
     ] = useState(props.eAnsLbl ? props.eAnsLbl : '');
     const onChangeAns = (event: any) => {
         setSelectedAns(event.target.value);
         props.changeAns(props.id, event.target.value)
     };
-    const showAnswer = () => {
-    }
+
     return (
         <div style={{ borderBottom: "1px dashed black", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", padding: "10px 0px 10px 0px" }}>
             <h3 style={{ width: "100%", display: "flex", justifyContent: "space-between" }}><span><span style={{ color: "blue", fontWeight: "bold" }}>{props.order + 1}</span>
                 &nbsp; &nbsp;  <span style={{ color: "#6d6d75", fontSize: "10px" }}>ID:{props.id}</span></span>
                 <div style={{ marginLeft: '60%', display: "flex", gap: "10%" }}>
+
+
+                    {props.note && <InfoCircleOutlined className='info-icon' style={{ color: "blue" }} />}
+
+
                     <button onClick={() => {
                         window.open(`${props.videoLink}&autoplay=1`, '_blank');
                     }}>Solution</button>
                     <button onClick={() => {
-                        props.showModal(`${props.videoLink}&autoplay=1`, '_blank');
+                        props.showAnswerModal(`${props.videoLink}&autoplay=1`, '_blank');
                     }}>Watch Solution</button>
                 </div>
             </h3>

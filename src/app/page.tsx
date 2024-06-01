@@ -1,7 +1,7 @@
 "use client";
 import SectionCard from "@/components/SectionCard";
 import { Button, Col, Divider, Row, message } from "antd";
-import data from '@/app/mock/Topic';
+
 import { useEffect, useState } from "react";
 import { SetLoading } from "@/redux/loadersSlice";
 import { useDispatch } from "react-redux";
@@ -30,7 +30,7 @@ export default function Home() {
       <Divider orientation="left">Topic</Divider>
       <Row gutter={[16, 24]}>
         {
-          topics && topics.length>0 && topics.map((el:any) => <>
+          topics && topics.length > 0 && topics.map((el: any) => <>
             <Col className="gutter-row" span={6}>
               <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
             </Col>

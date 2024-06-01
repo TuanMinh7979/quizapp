@@ -45,7 +45,7 @@ export default function Home() {
         {
           topics && topics.length && topics.map((el:any) => <>
             <Col className="gutter-row" span={6}>
-              <div className="math-section" style={style}><SectionCard url={`/topics/${el.slugStr}`} title={el.name}></SectionCard></div>
+              <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
             </Col>
           </>)
         }

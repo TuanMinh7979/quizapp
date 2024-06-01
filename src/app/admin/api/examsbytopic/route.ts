@@ -1,18 +1,17 @@
-
 import { connectDB } from "@/config/dbConfig";
 import Exam from "@/models/examModel";
 import Question from "@/models/questionModel";
 import { NextRequest, NextResponse } from "next/server";
-
-
-
 connectDB();
-export async function DELETE(request: NextRequest, { params }: any) {
+export async function GET(request: NextRequest) {
     try {
-        const rs = await Exam.findByIdAndDelete(params.id);
-        const delAns = await Question.deleteMany({ examId: params.id })
+
+        const { searchParams } = new URL(request.url);
+        const topicIdStrPar = searchParams.get("topicSlug");
+
+        const rs = await Exam.find({ topicSlug: topicIdStrPar });
         return NextResponse.json(
-            { message: "Exam delete successfully", success: true },
+            { examList: rs },
             { status: 200 }
         );
     } catch (error: any) {

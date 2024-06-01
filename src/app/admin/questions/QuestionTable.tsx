@@ -1,19 +1,19 @@
 import React from 'react';
 
 const QuestionTable = (props:any) => {
-    const { student, deleteStudent, setSelectedStudent } = props
+    const { question, deleteQuestion, setSelectedQuestion } = props
     const handleClickEdit = () => {
-        setSelectedStudent(student); // Cập nhật state khi click "Sửa"
+        setSelectedQuestion(question); // Cập nhật state khi click "Sửa"
     };
 
     return (
         <tr>
-            <td>{student._id}</td>
-            <td>{student.rightLbl}</td>
-            <td>{student.examId}</td>
+            <td>{question._id}</td>
+            <td>{question.rightLbl}</td>
+            <td>{question.examId}</td>
             <td>
                 <button onClick={handleClickEdit}>Sửa</button>
-                <button onClick={() => deleteStudent(student.id)}>Xóa</button>
+                <button onClick={() => deleteQuestion(question.id)}>Xóa</button>
             </td>
         </tr>
     );

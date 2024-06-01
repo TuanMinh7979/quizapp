@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
 import { message } from 'antd';
+import QuestionTable from './QuestionTable';
 const page = () => {
   const dispatch = useDispatch()
 
@@ -27,8 +28,6 @@ const page = () => {
         console.log(response.data.rs)
         message.success(response.data.message);
         setQuestions([...questions, response.data.rs])
-
-
         dispatch(SetLoading(false));
 
       } catch (error: any) {
@@ -42,10 +41,30 @@ const page = () => {
 
 
 
-  const updateQuestionService = () => {
-    const updatedStudents = [...questions, newQuestion];
-    setQuestions(updatedStudents);
-    setNewQuestion({ _id: '', rightLbl: '', examId: '' }); // Xóa thông tin sinh viên mới
+  const updateQuestionService = async () => {
+    const examFinded = exams.find((el: any) => el.name == selectedExamName)
+
+    if (examFinded) {
+      try {
+        dispatch(SetLoading(true));
+
+        const response = await axios.put("/api/questions", { ...newQuestion, examId: examFinded._id, });
+        console.log(response.data.rs)
+        message.success(response.data.message);
+        let temp = questions.map((el: any) => {
+          if (el._id == response.data.rs._id) {
+            return response.data.rs
+          } else return el
+        })
+        setQuestions([...temp])
+        dispatch(SetLoading(false));
+
+      } catch (error: any) {
+        message.error(error.response.data.message || "Something went wrong");
+      } finally {
+        dispatch(SetLoading(false));
+      }
+    }
   };
 
 
@@ -152,7 +171,7 @@ const page = () => {
           </div>
           <div>
             <label htmlFor="examId">ExamId:</label>
-            <select onChange={(event: any) => onExamChange(event)} id="examId" value={newQuestion.examId}>
+            <select disabled={mode == "edit"} onChange={(event: any) => onExamChange(event)} id="examId" value={newQuestion.examId}>
               {exams.map((el: any) =>
                 <option value={el.name}>{el.name}</option>
 
@@ -172,7 +191,7 @@ const page = () => {
       </div>
 
       <div className="table-container" style={{ flex: 2, border: "1px solid blue" }}>
-        <h2>List</h2>
+        <h2>List {questions.length}</h2>
         <table style={{ width: "100%" }}>
           <thead>
             <tr>
@@ -184,13 +203,13 @@ const page = () => {
           </thead>
           <tbody>
             {questions.map((item: any, index: number) => (
-              <Student
+              <QuestionTable
                 key={index}
-                student={item}
+                question={item}
 
-                deleteStudent={deleteQuestionService}
+                deleteQuestion={deleteQuestionService}
 
-                setSelectedStudent={onEditClick}
+                setSelectedQuestion={onEditClick}
               />
             ))}
           </tbody>

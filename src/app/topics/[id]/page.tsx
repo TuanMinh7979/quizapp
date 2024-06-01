@@ -68,7 +68,7 @@ const Section = () => {
         {exams.map((el) => <>
 
           <Col className="gutter-row exam-col" span={6}>
-            <div className="math-section" style={style}><ExamCard correctCnt={el.correctCnt} questionCnt={el.questionCnt} answerCnt={el.answerCnt} url={`/exams/${el.name}`} title={el?.name}></ExamCard></div>
+            <div className="math-section" style={style}><ExamCard description= {el.description} correctCnt={el.correctCnt} questionCnt={el.questionCnt} answerCnt={el.answerCnt} url={`/exams/${el.name}`} title={el?.name}></ExamCard></div>
           </Col>
           
         </>)}

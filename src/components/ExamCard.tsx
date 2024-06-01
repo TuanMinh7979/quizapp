@@ -12,7 +12,8 @@ interface PropsType {
     url: string;
     answerCnt: number,
     questionCnt: number,
-    correctCnt: number
+    correctCnt: number ,
+    description:string
 
 }
 
@@ -24,7 +25,7 @@ const ViewResultComponent = (cb: any) => {
 
 
 const ExamCard = (props: PropsType) => {
-    const { title, url, answerCnt, questionCnt, correctCnt } = props;
+    const { title, url, answerCnt, questionCnt, correctCnt, description } = props;
     const router = useRouter();
     const onShowViewResult = (event: any) => {
         event.preventDefault()
@@ -67,7 +68,7 @@ const ExamCard = (props: PropsType) => {
     >
         <Meta
 
-            title={<ExamPreviewBody correctCnt={correctCnt} questionCnt={questionCnt} answerCnt={answerCnt}></ExamPreviewBody>}
+            title={<ExamPreviewBody description={description} correctCnt={correctCnt} questionCnt={questionCnt} answerCnt={answerCnt}></ExamPreviewBody>}
 
 
 

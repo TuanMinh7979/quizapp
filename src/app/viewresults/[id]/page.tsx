@@ -65,12 +65,25 @@ const ViewResult = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const showModal = () => {
+    const [modalData, setModalData] = useState("")
+    const showModal = (dataToOpen: any) => {
+        console.log(dataToOpen)
+        setModalData(dataToOpen)
         setIsModalOpen(true);
     };
 
-   
 
+
+
+    const handleOk = () => {
+        setModalData("");
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setModalData("");
+        setIsModalOpen(false);
+    };
 
 
 
@@ -78,13 +91,13 @@ const ViewResult = () => {
     return (
         <>{data && <>
 
-            {isModalOpen &&
-                <AnswerModal></AnswerModal>}
+            {modalData && <AnswerModal modalData={modalData} isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></AnswerModal>}
+
             <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={() => onClickBack(data.topicIdStr)} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3> {data.topic + ` > `}{data.name}</h3></div>
             <ControlBtns />
             <div style={{ width: "90%", border: "1px solid gray", padding: "10px 10px 200px 10px", margin: "0 auto" }}>
                 {data.questions.length > 0 && data.questions.map((el: any, index: number) => <>
-                    <QuestionCardForView eAnsLbl={el.eAnsLbl} changeAns={() => { }} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCardForView>
+                    <QuestionCardForView videoLink={el.videoLink} showModal={showModal} eAnsLbl={el.eAnsLbl} changeAns={() => { }} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCardForView>
                 </>)}
             </div>
             <ControlBtns />

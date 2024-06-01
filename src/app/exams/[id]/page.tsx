@@ -11,6 +11,7 @@ import ControlBtns from '@/components/ControlBtns';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
+import AnswerModal from '@/components/AnswerModal';
 
 
 const changeKeys = (oldKey: string, newKey: string, lst: any[]) => {
@@ -108,15 +109,43 @@ const Exam = () => {
 
         setExamTry([...tmpExamTry])
     };
-   
+
+
+
+
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [modalData, setModalData] = useState("")
+    const showModal = (dataToOpen: any) => {
+        console.log(dataToOpen)
+        setModalData(dataToOpen)
+        setIsModalOpen(true);
+    };
+
+
+
+
+    const handleOk = () => {
+        setModalData("");
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setModalData("");
+        setIsModalOpen(false);
+    };
+
     return (
         <>{data && <>
+            {modalData && <AnswerModal modalData={modalData} isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></AnswerModal>}
+
 
             <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={() => onClickBack(data.topicIdStr)} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3> {data.topic + ` > `}{data.name}</h3></div>
             <ControlBtns onSave={onSave} />
             <div style={{ width: "90%", border: "1px solid gray", padding: "10px 10px 200px 10px", margin: "0 auto" }}>
                 {data.questions.length > 0 && data.questions.map((el: any, index: number) => <>
-                    <QuestionCard eAnsLbl={el.eAnsLbl} changeAns={changeAns} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCard>
+                    <QuestionCard videoLink={el.videoLink} showModal={showModal} eAnsLbl={el.eAnsLbl} changeAns={changeAns} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCard>
                 </>)}
             </div>
             <ControlBtns onSave={onSave} />

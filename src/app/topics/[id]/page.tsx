@@ -8,10 +8,11 @@ import {
 } from '@ant-design/icons'
 import { TopicType } from '@/app/mock/types';
 import data from '@/app/mock/Topic';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
 const Section = () => {
+  const { currentUser }: { currentUser: any } = useSelector((state: any) => state.users);
   const style: React.CSSProperties = { padding: '0 0' };
   const { id } = useParams();
   const router = useRouter();
@@ -23,8 +24,8 @@ const Section = () => {
   const fetchInit = async () => {
     try {
       dispatch(SetLoading(true));
-      const response = await axios.get(`/api/exams?topicSlug=${id}`);
-  
+      const response = await axios.get(`/api/exams?topicSlug=${id}&userId=${currentUser._id}`);
+
       let dataTemp = response.data.rs;
       for (let examDataItem of dataTemp) {
         let questionsTemp = examDataItem.questions
@@ -38,7 +39,7 @@ const Section = () => {
         }
         examDataItem["correctCnt"] = correctCnt
       }
-   
+
       setExams(dataTemp);
     } catch (error: any) {
       message.error(error.message);
@@ -55,9 +56,9 @@ const Section = () => {
       <Row gutter={[16, 24]}>
         {exams.map((el) => <>
           <Col className="gutter-row exam-col" span={6}>
-            <div className="math-section" style={style}><ExamCard description= {el.description} correctCnt={el.correctCnt} questionCnt={el.questionCnt} answerCnt={el.answerCnt} url={`/exams/${el.name}`} title={el?.name}></ExamCard></div>
+            <div className="math-section" style={style}><ExamCard description={el.description} correctCnt={el.correctCnt} questionCnt={el.questionCnt} answerCnt={el.answerCnt} url={`/exams/${el.name}`} title={el?.name}></ExamCard></div>
           </Col>
-          
+
         </>)}
       </Row></>}
     </>

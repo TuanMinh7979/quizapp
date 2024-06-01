@@ -26,7 +26,7 @@ const removeKeys = (keyToRemove: string, lst: any[]) => {
 }
 const Exam = () => {
     // id is Exam.name or code
-    const { currentUser } = useSelector((state: any) => state.users);
+    const { currentUser }:{currentUser: any} = useSelector((state: any) => state.users);
     const { id } = useParams();
     const router = useRouter();
     const onClickBack = (topicSlug: string) => {
@@ -38,7 +38,8 @@ const Exam = () => {
     const fetchInit = async () => {
         try {
             dispatch(SetLoading(true));
-            const response = await axios.get(`/api/exams/${id}`);
+            const response = await axios.get(`/api/exams/${id}?userId=${currentUser._id}`);
+            console.log("response .....", response)
             let qsList = response.data.rs.questions;
             let answerList = response.data.rs.answers;
             let dataToExamTry = []
@@ -56,6 +57,7 @@ const Exam = () => {
             setData(response.data.rs);
             setExamTry([...dataToExamTry])
         } catch (error: any) {
+            console.log(error);
             message.error(error.message);
         } finally {
             dispatch(SetLoading(false));

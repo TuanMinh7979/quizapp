@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 connectDB();
 export async function GET(request: NextRequest, { params }: any) {
+  const { searchParams } = new URL(request.url);
+  const userIdPar = searchParams.get("userId");
   const examPipeline = [
     {
       $lookup: {
@@ -18,18 +20,33 @@ export async function GET(request: NextRequest, { params }: any) {
         from: 'answers',
         localField: '_id',
         foreignField: 'examId',
+        let: { userId: "$userId" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $eq: ["$userId", new mongoose.Types.ObjectId(userIdPar ? userIdPar : '')]
+              }
+
+            },
+          },
+
+        ],
         as: 'answers',
+
       },
     },
     {
       $addFields: {
         questionCnt: { $size: '$questions' },
         answerCnt: { $size: '$answers' },
+
       },
     },
     {
-      $match: { // Optional filter for students (replace with your criteria)
-        name: params.name, // Replace with actual student ID
+      $match: {
+        name: params.name,
+
       },
     },
   ];

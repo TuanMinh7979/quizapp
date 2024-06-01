@@ -25,7 +25,7 @@ const ViewResult = () => {
     const fetchInit = async () => {
         try {
             dispatch(SetLoading(true));
-            const response = await axios.get(`/api/exams/${id}`);
+            const response = await axios.get(`/api/exams/${id}?userId=${currentUser._id}`);
             let qsList = response.data.rs.questions;
             let answerList = response.data.rs.answers;
             let dataToExamTry = []

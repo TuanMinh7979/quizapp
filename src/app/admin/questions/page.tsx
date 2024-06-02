@@ -18,9 +18,10 @@ const page = () => {
     try {
       dispatch(SetLoading(true));
 
-      const { _id: eid, ...restBody } = newQuestion
-
-      const response = await axios.post("/api/questions", { ...restBody });
+      const { _id: eid, videoLink: eVideoLink, ...restBody } = newQuestion
+      let newStartTime = Number(startMin) * 60 + Number(startSec)
+      let newVideoLink = eVideoLink + "?start=" + newStartTime
+      const response = await axios.post("/api/questions", { videoLink: newVideoLink, ...restBody });
       message.success(response.data.message);
       setQuestions([...questions, response.data.rs])
 
@@ -117,9 +118,7 @@ const page = () => {
     let findedExam = exams.find((el: any) => el._id == event.target.value)
     fetchWhenChangeExamName(findedExam.name)
   }
-  // const onVideoLinkChange = (event: any) => {
-  //   setNewQuestion({ ...newQuestion, videoLink: event.target.value })
-  // }
+
 
   const onQuestionFieldChange = (event: any) => {
     setNewQuestion({ ...newQuestion, [event.target.name]: event.target.value })
@@ -136,6 +135,9 @@ const page = () => {
   const changeImgLinkToUp = (base64Str: any) => {
     setNewQuestion({ ...newQuestion, imgLink: base64Str })
   }
+
+  const [startMin, setStartMin] = useState(0);
+  const [startSec, setStartSec] = useState(0);
   return (
     <> {
       exams.length > 0 && <div className="App" style={{ display: "flex", width: "100%", }}>
@@ -185,6 +187,14 @@ const page = () => {
             <div>
               <label >Video Link:</label>
               <input type="text" disabled={disableWhenEdit()} name="videoLink" onChange={onQuestionFieldChange} value={newQuestion.videoLink} />
+            </div>
+            <div>
+              <label >Start time:</label>
+              <div className="" style={{ display: 'flex', gap: '100px' }}>
+                <input type="text" disabled={disableWhenEdit()} onChange={(e: any) => setStartMin(e.target.value)} value={startMin} />
+                <input type="text" disabled={disableWhenEdit()} onChange={(e: any) => setStartSec(e.target.value)} value={startSec} />
+              </div>
+
             </div>
             <div>
               <label >Note:</label>

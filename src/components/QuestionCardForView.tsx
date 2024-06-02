@@ -11,15 +11,16 @@ const QuestionCardForView = (props: any) => {
             <h3 style={{ width: "100%", display: "flex", justifyContent: "space-between" }}><span>
                 <span style={{ color: "blue", fontWeight: "bold" }}>{props.order + 1}</span>
                 &nbsp; &nbsp;  <span style={{ color: "#6d6d75", fontSize: "10px" }}>ID:{props.id}</span></span>
-               
-                <div style={{ marginLeft:'60%' ,display: "flex", gap: "10%"}}>
-                {props.note && <InfoCircleOutlined onClick={() => props.showNoteModal(props.note)} className='info-icon' style={{ color: "blue" }} />}
-                    <button onClick={() => {
+
+                <div style={{ marginLeft: '60%', display: "flex", gap: "10%" }}>
+                    {props.note && <InfoCircleOutlined onClick={() => props.showNoteModal(props.note)} className='info-icon' style={{ color: "blue" }} />}
+                    {!props.videoLink.startsWith("?") && <> <button onClick={() => {
                         window.open(`${props.videoLink}&autoplay=1`, '_blank');
                     }}>Solution</button>
-                    <button onClick={() => {
-                        props.showAnswerModal(`${props.videoLink}&autoplay=1`, '_blank');
-                    }}>Watch Solution</button>
+                        <button onClick={() => {
+                            props.showAnswerModal(`${props.videoLink}&autoplay=1`, '_blank');
+                        }}>Watch Solution</button></>}
+
                 </div>
                 &nbsp;&nbsp; {props.eAnsLbl == props.rightLbl ?
                     <span style={{ padding: "2px", background: "blue", color: "white" }}>Done</span> : props.eAnsLbl == '' ?

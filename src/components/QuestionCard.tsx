@@ -21,13 +21,13 @@ const QuestionCard = (props: any) => {
 
                     {props.note && <InfoCircleOutlined onClick={() => props.showNoteModal(props.note)} className='info-icon' style={{ color: "blue" }} />}
 
-
-                    <button onClick={() => {
+                    {!props.videoLink.startsWith("?") && <>      <button onClick={() => {
                         window.open(`${props.videoLink}&autoplay=1`, '_blank');
                     }}>Solution</button>
-                    <button onClick={() => {
-                        props.showAnswerModal(`${props.videoLink}&autoplay=1`, '_blank');
-                    }}>Watch Solution</button>
+                        <button onClick={() => {
+                            props.showAnswerModal(`${props.videoLink}&autoplay=1`, '_blank');
+                        }}>Watch Solution</button></>}
+
                 </div>
             </h3>
             <div style={{ margin: "0 auto" }}>

@@ -27,7 +27,7 @@ const QuestionCardForView = (props: any) => {
                         <span style={{ padding: "2px", background: "orange", color: "white" }}>Wrong</span>}
             </h3>
             <div style={{ margin: "0 auto" }}>
-                <img style={{ objectFit: "cover", width: "1000px", height: "300px" }} src={props.imgLink} alt="" />
+                <img style={{ objectFit: "contain", width: "1000px", height: "300px" }} src={props.imgLink} alt="" />
             </div>
             <div style={{ width: "80%", margin: "0 auto", display: "flex", justifyContent: 'center' }}>
                 <div style={{ flex: "1", display: "flex", justifyContent: 'flex-start' }}>

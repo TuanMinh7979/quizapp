@@ -66,7 +66,7 @@ const Exam = () => {
     useEffect(() => {
         fetchInit()
     }, [])
-    const onSave = async (values: any) => {
+    const onSave = async (url: any) => {
         try {
             dispatch(SetLoading(true));
             let toAddList = removeKeys('eAnswerId', [...examTry].filter(el => !el.eAnswerId))
@@ -74,7 +74,7 @@ const Exam = () => {
             const response = await axios.post("/api/answers", { toAddList, toUpdateList });
             message.success(response.data.message);
             dispatch(SetLoading(false));
-            router.push("/");
+            router.push("/topics/"+url);
         } catch (error: any) {
             message.error(error.response.data.message || "Something went wrong");
         } finally {
@@ -122,13 +122,13 @@ const Exam = () => {
             {answerModalData && <AnswerModal answerModalData={answerModalData} isAnswerModalOpen={isAnswerModalOpen} handleModalBtns={handleModalBtns} ></AnswerModal>}
             {noteModalData && <NoteModal noteModalData={noteModalData} isNoteModalOpen={isNoteModalOpen} handleModalBtns={handleNoteModalBtns} ></NoteModal>}
             <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={() => onClickBack(data.topicSlug)} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3> {data.topicName + ` > `}{data.name}</h3></div>
-            <ControlBtns onSave={onSave} />
+            <ControlBtns onSave={()=>onSave(data.topicSlug)} />
             <div style={{ width: "90%", border: "1px solid gray", padding: "10px 10px 200px 10px", margin: "0 auto" }}>
                 {data.questions.length > 0 && data.questions.map((el: any, index: number) => <>
                     <QuestionCard imgLink={el.imgLink} note={el.note} videoLink={el.videoLink} showNoteModal={showNoteModal} showAnswerModal={showAnswerModal} eAnsLbl={el.eAnsLbl} changeAns={changeAns} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCard>
                 </>)}
             </div>
-            <ControlBtns onSave={onSave} />
+            <ControlBtns onSave={()=>onSave(data.topicSlug)} />
         </>}
         </>
     )

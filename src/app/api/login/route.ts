@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
             isAdmin: user.isAdmin
         };
         const token = jwt.sign(dataToBeSigned, process.env.jwt_secret!, {
-            expiresIn: "1d",
+            expiresIn: "20d",
         });
         const response = NextResponse.json(
             { message: "Login successful" },
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
         // set cookie
         response.cookies.set("token", token, {
             httpOnly: true,
-            maxAge: 60 * 60 * 24 * 1000, // 1 day
+            maxAge: 60 * 60 * 299 * 1000, // 1 day
         });
         return response;
     } catch (error: any) {

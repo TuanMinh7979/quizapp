@@ -148,7 +148,7 @@ const page = () => {
   return (
     <> {
       exams.length > 0 && <div className="App" style={{ display: "flex", width: "100%", }}>
-        <div className="form-container" style={{ flex: 1, }}>
+        <div className="form-container" onPaste={()=>alert(123)}style={{ flex: 1, }}>
           <h2>New Question
 
 

@@ -16,7 +16,7 @@ export function readAsBase64(file: any) {
 
 
 
-const ImageUpload = (props: any) => {
+const ImagePreview = (props: any) => {
     const [avatar, setAvatar] = useState<any>(props.imgLinkToShow)
     const hdlChangeFile = async (e: any) => {
         const target = e.target as HTMLInputElement;
@@ -38,17 +38,17 @@ const ImageUpload = (props: any) => {
         e.preventDefault();
         setIsDragging(true);
         e.dataTransfer.dropEffect = "copy";
-
-    }
-    const onDragLeavehdl = (e: any) => {
+    
+      }
+      const onDragLeavehdl = (e: any) => {
         e.preventDefault();
         setIsDragging(false)
-
-    }
-    const onDragDrophdl = async (e: any) => {
+    
+      }
+      const onDragDrophdl = async(e:any) => {
         e.preventDefault();
         setIsDragging(false)
-        const files = e.dataTransfer.files
+        const files= e.dataTransfer.files
         if (files.length == 0) return
 
         if (files) {
@@ -58,28 +58,11 @@ const ImageUpload = (props: any) => {
                 props.changeBase64ToUp(await readAsBase64(file))
             }
         }
-
-    }
-    const handlePaste = async (event: any) => {
-      
-        const items = event.clipboardData.items;
-        for (let i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                const file = items[i].getAsFile();
-
-                setAvatar(window.URL.createObjectURL(file));
-                props.changeBase64ToUp(await readAsBase64(file))
-            }
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener('paste', handlePaste)
-    }, [])
-
+    
+      }
 
     return (
-        <div className="info_avatar" onPaste={handlePaste} style={{ background: "blue", width: "100%", height: "300px" }} onDragOver={onDragOverhdl} onDragLeave={onDragLeavehdl} onDrop={onDragDrophdl}>
+        <div className="info_avatar"  style={{ background: "blue" , width:"100%", height:"300px"}} onDragOver={onDragOverhdl} onDragLeave={onDragLeavehdl} onDrop={onDragDrophdl}>
             <img
                 src={
                     avatar
@@ -90,7 +73,7 @@ const ImageUpload = (props: any) => {
                 <i className="fas fa-camera" />
                 <p>change</p>
                 <input
-
+            
                     disabled={props.mode == "edit" ? true : false}
                     type="file"
                     accept="image/*"
@@ -102,4 +85,4 @@ const ImageUpload = (props: any) => {
         </div>
     )
 }
-export default ImageUpload
+export default ImagePreview

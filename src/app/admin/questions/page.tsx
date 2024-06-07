@@ -141,73 +141,10 @@ const page = () => {
 
 
 
-  const fileInputRef = useRef<any>(null)
-  const [isDragging, setIsDragging] = useState(false)
-  const [images, setImages] = useState<any[]>([])
-
-  const selectFile = () => {
-    fileInputRef.current.click();
-  }
 
 
-  const onFileSelect = (event: any) => {
-    const files = event.target.files;
-    if (files.length == 0) return
-    for (let i = 0; i < files.length; i++) {
-      if (files[i].type.split('/')[0] !== 'image') continue;
-      if (!images.some((e: any) => e.name == files[i].name)) {
-        setImages((prevImages: any) => {
 
-          return [
-            ...prevImages,
-            {
-              name: files[i].name,
-              url: URL.createObjectURL(files[i])
-            }
-          ]
 
-        }
-        )
-      }
-    }
-
-  }
-
-  const onDragOverhdl = (e: any) => {
-    e.preventDefault();
-    setIsDragging(true);
-    e.dataTransfer.dropEffect = "copy";
-
-  }
-  const onDragLeavehdl = (e: any) => {
-    e.preventDefault();
-    setIsDragging(false)
-
-  }
-  const onDragDrophdl = (e:any) => {
-    e.preventDefault();
-    setIsDragging(false)
-    const files= e.dataTransfer.files
-    if (files.length == 0) return
-    for (let i = 0; i < files.length; i++) {
-      if (files[i].type.split('/')[0] !== 'image') continue;
-      if (!images.some((e: any) => e.name == files[i].name)) {
-        setImages((prevImages: any) => {
-
-          return [
-            ...prevImages,
-            {
-              name: files[i].name,
-              url: URL.createObjectURL(files[i])
-            }
-          ]
-
-        }
-        )
-      }
-    }
-
-  }
   return (
     <> {
       exams.length > 0 && <div className="App" style={{ display: "flex", width: "100%", }}>
@@ -254,29 +191,11 @@ const page = () => {
                   Update </button>
               }
             </div>
-            {/* <div>
-              <label >Img Link:</label>
-              <ImageUpload mode={mode} imgLinkToShow={newQuestion.imgLink} changeBase64ToUp={changeImgLinkToUp} />
-            </div> */}
-            <div className="drag-area" style={{ background: "blue" , width:"100%", height:"300px"}} onDragOver={onDragOverhdl} onDragLeave={onDragLeavehdl} onDrop={onDragDrophdl}>
-              <label >Img Link123:</label>
-              <input type="file" ref={fileInputRef} onChange={onFileSelect} />
-              <div>
-              {images.map((el: any) => <>
-                <div className="show-image" style={{border: "1px solid red"}}>
-                  <img src={el.url} alt="" />
-                </div>
 
-              </>)
+            <label >Img Link:</label>
+            <ImageUpload mode={mode} imgLinkToShow={newQuestion.imgLink} changeBase64ToUp={changeImgLinkToUp} />
 
 
-              }
-
-
-
-            </div>
-
-            </div>
 
             <div>
               <label >Video Link:</label>

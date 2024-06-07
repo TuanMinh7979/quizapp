@@ -13,6 +13,9 @@ export function readAsBase64(file: any) {
     });
     return fileValue;
 }
+
+
+
 const ImageUpload = (props: any) => {
     const [avatar, setAvatar] = useState<any>(props.imgLinkToShow)
     const hdlChangeFile = async (e: any) => {
@@ -29,8 +32,37 @@ const ImageUpload = (props: any) => {
     useEffect(() => {
         setAvatar(props.imgLinkToShow)
     }, [props.imgLinkToShow])
+
+    const [isDragging, setIsDragging] = useState(false)
+    const onDragOverhdl = (e: any) => {
+        e.preventDefault();
+        setIsDragging(true);
+        e.dataTransfer.dropEffect = "copy";
+    
+      }
+      const onDragLeavehdl = (e: any) => {
+        e.preventDefault();
+        setIsDragging(false)
+    
+      }
+      const onDragDrophdl = async(e:any) => {
+        e.preventDefault();
+        setIsDragging(false)
+        const files= e.dataTransfer.files
+        if (files.length == 0) return
+
+        if (files) {
+            const file = files[0];
+            if (file) {
+                setAvatar(window.URL.createObjectURL(file));
+                props.changeBase64ToUp(await readAsBase64(file))
+            }
+        }
+    
+      }
+
     return (
-        <div className="info_avatar">
+        <div className="info_avatar"  style={{ background: "blue" , width:"100%", height:"300px"}} onDragOver={onDragOverhdl} onDragLeave={onDragLeavehdl} onDrop={onDragDrophdl}>
             <img
                 src={
                     avatar
@@ -41,6 +73,7 @@ const ImageUpload = (props: any) => {
                 <i className="fas fa-camera" />
                 <p>change</p>
                 <input
+            
                     disabled={props.mode == "edit" ? true : false}
                     type="file"
                     accept="image/*"

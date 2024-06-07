@@ -125,7 +125,7 @@ const Exam = () => {
             <ControlBtns onSave={()=>onSave(data.topicSlug)} />
             <div style={{ width: "90%", border: "1px solid gray", padding: "10px 10px 200px 10px", margin: "0 auto" }}>
                 {data.questions.length > 0 && data.questions.map((el: any, index: number) => <>
-                    <QuestionCard imgLink={el.imgLink} note={el.note} videoLink={el.videoLink} showNoteModal={showNoteModal} showAnswerModal={showAnswerModal} eAnsLbl={el.eAnsLbl} changeAns={changeAns} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCard>
+                    <QuestionCard title= {el.title} imgLink={el.imgLink} note={el.note} videoLink={el.videoLink} showNoteModal={showNoteModal} showAnswerModal={showAnswerModal} eAnsLbl={el.eAnsLbl} changeAns={changeAns} order={index} id={el._id} rightLbl={el.rightLbl}></QuestionCard>
                 </>)}
             </div>
             <ControlBtns onSave={()=>onSave(data.topicSlug)} />

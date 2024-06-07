@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { SetLoading } from '@/redux/loadersSlice';
 import axios from 'axios';
@@ -13,7 +13,7 @@ const page = () => {
   const [exams, setExams] = useState<any[any]>([]); // State lưu trữ danh sách sinh viên
   const [mode, setMode] = useState("add");
   // imgLink can be url(update), base64 (add)
-  const [newQuestion, setNewQuestion] = useState({ _id: '', rightLbl: '', examId: '', imgLink: '', videoLink: '', note: '' }); // State lưu trữ thông tin sinh viên mới
+  const [newQuestion, setNewQuestion] = useState({ _id: '', title: "", rightLbl: '', examId: '', imgLink: '', videoLink: '', note: '' }); // State lưu trữ thông tin sinh viên mới
   const addQuestionService = async () => {
     try {
       dispatch(SetLoading(true));
@@ -58,7 +58,7 @@ const page = () => {
   }
   const onClickReset = () => {
     setMode("add")
-    setNewQuestion({ ...newQuestion, _id: '', rightLbl: '', imgLink: '', videoLink: '', note: '', examId: exams[0]._id })
+    setNewQuestion({ ...newQuestion, _id: '', rightLbl: '', title: "", imgLink: '', videoLink: '', note: '', examId: exams[0]._id })
   }
   const deleteQuestionService = async (id: string) => {
     try {
@@ -138,6 +138,76 @@ const page = () => {
 
   const [startMin, setStartMin] = useState(0);
   const [startSec, setStartSec] = useState(0);
+
+
+
+  const fileInputRef = useRef<any>(null)
+  const [isDragging, setIsDragging] = useState(false)
+  const [images, setImages] = useState<any[]>([])
+
+  const selectFile = () => {
+    fileInputRef.current.click();
+  }
+
+
+  const onFileSelect = (event: any) => {
+    const files = event.target.files;
+    if (files.length == 0) return
+    for (let i = 0; i < files.length; i++) {
+      if (files[i].type.split('/')[0] !== 'image') continue;
+      if (!images.some((e: any) => e.name == files[i].name)) {
+        setImages((prevImages: any) => {
+
+          return [
+            ...prevImages,
+            {
+              name: files[i].name,
+              url: URL.createObjectURL(files[i])
+            }
+          ]
+
+        }
+        )
+      }
+    }
+
+  }
+
+  const onDragOverhdl = (e: any) => {
+    e.preventDefault();
+    setIsDragging(true);
+    e.dataTransfer.dropEffect = "copy";
+
+  }
+  const onDragLeavehdl = (e: any) => {
+    e.preventDefault();
+    setIsDragging(false)
+
+  }
+  const onDragDrophdl = (e:any) => {
+    e.preventDefault();
+    setIsDragging(false)
+    const files= e.dataTransfer.files
+    if (files.length == 0) return
+    for (let i = 0; i < files.length; i++) {
+      if (files[i].type.split('/')[0] !== 'image') continue;
+      if (!images.some((e: any) => e.name == files[i].name)) {
+        setImages((prevImages: any) => {
+
+          return [
+            ...prevImages,
+            {
+              name: files[i].name,
+              url: URL.createObjectURL(files[i])
+            }
+          ]
+
+        }
+        )
+      }
+    }
+
+  }
   return (
     <> {
       exams.length > 0 && <div className="App" style={{ display: "flex", width: "100%", }}>
@@ -150,6 +220,10 @@ const page = () => {
             <div>
               <label htmlFor="name">ID:</label>
               <input type="text" id="_id" value={newQuestion._id} disabled />
+            </div>
+            <div>
+              <label htmlFor="name">Title:</label>
+              <input type="text" id="" value={newQuestion.title} onChange={onQuestionFieldChange} name="title" />
             </div>
             <div>
               <label htmlFor="rightLbl">RigthLbl:</label>
@@ -180,10 +254,30 @@ const page = () => {
                   Update </button>
               }
             </div>
-            <div>
+            {/* <div>
               <label >Img Link:</label>
               <ImageUpload mode={mode} imgLinkToShow={newQuestion.imgLink} changeBase64ToUp={changeImgLinkToUp} />
+            </div> */}
+            <div className="drag-area" style={{ background: "blue" , width:"100%", height:"300px"}} onDragOver={onDragOverhdl} onDragLeave={onDragLeavehdl} onDrop={onDragDrophdl}>
+              <label >Img Link123:</label>
+              <input type="file" ref={fileInputRef} onChange={onFileSelect} />
+              <div>
+              {images.map((el: any) => <>
+                <div className="show-image" style={{border: "1px solid red"}}>
+                  <img src={el.url} alt="" />
+                </div>
+
+              </>)
+
+
+              }
+
+
+
             </div>
+
+            </div>
+
             <div>
               <label >Video Link:</label>
               <input type="text" disabled={disableWhenEdit()} name="videoLink" onChange={onQuestionFieldChange} value={newQuestion.videoLink} />

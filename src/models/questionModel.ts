@@ -14,6 +14,9 @@ const questionSchema = new mongoose.Schema(
         note: {
             type: String,
         },
+        title: {
+            type: String,
+        },
         examId: { type: mongoose.Schema.Types.ObjectId, ref: 'Exam' },
     }
 );

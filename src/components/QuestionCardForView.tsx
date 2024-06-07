@@ -10,7 +10,10 @@ const QuestionCardForView = (props: any) => {
         <div style={{ borderBottom: "1px dashed black", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", padding: "10px 0px 10px 0px" }}>
             <h3 style={{ width: "100%", display: "flex", justifyContent: "space-between" }}><span>
                 <span style={{ color: "blue", fontWeight: "bold" }}>{props.order + 1}</span>
-                &nbsp; &nbsp;  <span style={{ color: "#6d6d75", fontSize: "10px" }}>ID:{props.id}</span></span>
+                {/* &nbsp; &nbsp;  <span style={{ color: "#6d6d75", fontSize: "10px" }}>ID:{props.id}</span> */}
+                {props.title && <> &nbsp; &nbsp;  <span style={{ color: "blue", fontSize: "12px" }}>{props.title}</span></>}
+
+            </span>
 
                 <div style={{ marginLeft: '60%', display: "flex", gap: "10%" }}>
                     {props.note && <InfoCircleOutlined onClick={() => props.showNoteModal(props.note)} className='info-icon' style={{ color: "blue" }} />}

@@ -10,12 +10,16 @@ const questionSchema = new mongoose.Schema(
         },
         videoLink: {
             type: String,
+            default:""
         },
         note: {
             type: String,
+              default:"Xem video"
+            
         },
         title: {
             type: String,
+            default:"Đề thi 2023"
         },
         examId: { type: mongoose.Schema.Types.ObjectId, ref: 'Exam' },
     }

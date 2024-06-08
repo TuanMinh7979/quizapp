@@ -12,7 +12,13 @@ export async function POST(request: NextRequest) {
     const { ['imgLink']: base64Str, ...restBody } = reqBody
     const randomObjectId = new mongoose.Types.ObjectId();
     const idImg = await uploadFromBase64(randomObjectId.toString(), base64Str);
-    const rs = await Question.create({ ...reqBody, _id: randomObjectId, imgLink: process.env.drivePrefix + "?id=" + idImg + "&sz=w1000" });
+    const rs = await Question.create({
+      ...reqBody, _id: randomObjectId, imgLink: process.env.drivePrefix + "?id=" + idImg + "&sz=w1000",
+
+
+      title: reqBody.title ? reqBody.title : "Đề thi 2023",
+      note: reqBody.note ? reqBody.note : "Xem video"
+    });
     return NextResponse.json(
       { message: "Question created successfully", rs: rs, success: true },
       { status: 201 }

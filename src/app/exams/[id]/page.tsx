@@ -50,10 +50,12 @@ const Exam = () => {
                     examId: response.data.rs._id,
                     questionId: el._id,
                     lbl: eAnsIdx != -1 ? answerList[eAnsIdx].lbl : '',
+                  
                     userId: currentUser._id
                 })
                 el["eAnsLbl"] = eAnsIdx != -1 ? answerList[eAnsIdx].lbl : ''
             }
+            console.log(response.data.rs)
             setData(response.data.rs);
             setExamTry([...dataToExamTry])
         } catch (error: any) {

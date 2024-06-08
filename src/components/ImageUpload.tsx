@@ -79,7 +79,7 @@ const ImageUpload = (props: any) => {
 
 
     return (
-        <div className="info_avatar" onPaste={handlePaste} style={{ background: "blue", width: "100%", height: "300px" }} onDragOver={onDragOverhdl} onDragLeave={onDragLeavehdl} onDrop={onDragDrophdl}>
+        <div className="info_avatar" onPaste={handlePaste} style={{ background: "#2071c1", width: "100%", height: "300px" }} onDragOver={onDragOverhdl} onDragLeave={onDragLeavehdl} onDrop={onDragDrophdl}>
             <img
                 src={
                     avatar

@@ -142,7 +142,7 @@ const page = () => {
       </div>
       <div className="table-container" style={{ flex: 2, }}>
         <h2>List {exams.length}</h2>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>   <Link href={"/admin/questions"} ><span style={{ color: "blue" }}>To Question</span></Link></div>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>   <Link href={"/admin/questions"} ><span style={{ color: "blue" , padding: "12px", background: "cyan"}}>To Question</span></Link></div>
 
         <table style={{ width: "100%" }}>
           <thead>

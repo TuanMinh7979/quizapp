@@ -46,9 +46,9 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
        getCurrentUser();
     }
 
-    if (pathname.startsWith("/admin") && (!currentUser || !currentUser.isAdmin)) {
-      router.push("/")
-    }
+    // if (pathname.startsWith("/admin") && (!currentUser || !currentUser.isAdmin)) {
+    //   router.push("/")
+    // }
 
 
   }, [pathname]);

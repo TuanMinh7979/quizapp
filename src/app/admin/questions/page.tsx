@@ -20,16 +20,16 @@ const page = () => {
 
       const { _id: eid, videoLink: eVideoLink, ...restBody } = newQuestion
       // let newStartTime = Number(startMin) * 60 + Number(startSec)
-      let newStartTime = Math.floor(totalTime) 
+      let newStartTime = Math.floor(totalTime)
       let newVideoLink = ""
       if (!eVideoLink) {
-        newVideoLink = "https://www.youtube.com/embed/jSN61THRcIs" + "?start=" + newStartTime
+        newVideoLink = "https://www.youtube.com/embed/7s9aTEtODGs" + "?start=" + newStartTime
       } else {
         newVideoLink = eVideoLink + "?start=" + newStartTime
       }
 
       // if (!newQuestion.title) {
-      restBody.title = "Đề minh họa 2024 " + restBody.title
+      restBody.title = "Đề minh họa 2024.  " + restBody.title
       // }
       if (!newQuestion.note) {
         restBody.note = "Xem video"
@@ -38,7 +38,10 @@ const page = () => {
       const response = await axios.post("/api/questions", { videoLink: newVideoLink, ...restBody });
       message.success(response.data.message);
       setQuestions([...questions, response.data.rs])
-
+      setNewQuestion(
+        (prevState: any) => ( { _id: '', title: "", rightLbl: '', examId: '', imgLink: '', videoLink: '', note: '' })
+        
+       )
       dispatch(SetLoading(false));
     } catch (error: any) {
       console.log(error)
@@ -226,7 +229,7 @@ const page = () => {
               <div className="" style={{ display: 'flex', gap: '100px' }}>
                 {/* <input type="text" disabled={disableWhenEdit()} onChange={(e: any) => setStartMin(e.target.value)} value={startMin} />
                 <input type="text" disabled={disableWhenEdit()} onChange={(e: any) => setStartSec(e.target.value)} value={startSec} /> */}
-                <input type="text" disabled={disableWhenEdit()} onChange={(e: any) => setTotalTime(Math.floor(e.target.value) )} value={totalTime} /> 
+                <input type="text" disabled={disableWhenEdit()} onChange={(e: any) => setTotalTime(Math.floor(e.target.value))} value={totalTime} />
               </div>
 
             </div>

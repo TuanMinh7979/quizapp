@@ -15,23 +15,23 @@ const QuestionCardForView = (props: any) => {
 
             </span>
 
-                <div style={{  display: "flex", gap: "10%" }}>
-                    props.note && <InfoCircleOutlined onClick={() => props.showNoteModal(props.note)} className='info-icon' style={{ color: "blue" }} />
-                    {props.videoLink.indexOf("start=0")==-1&& <> <button onClick={() => {
+                <div style={{ display: "flex", gap: "10%" }}>
+                    <InfoCircleOutlined onClick={() => props.showNoteModal(props.note)} className='info-icon' style={{ color: "blue" }} />
+                    {props.videoLink.indexOf("start=0") == -1 && <> <button onClick={() => {
                         window.open(`${props.videoLink}&autoplay=1`, '_blank');
                     }}>Solution</button>
                         <button onClick={() => {
                             props.showAnswerModal(`${props.videoLink}&autoplay=1`, '_blank');
                         }}>Watch Solution</button></>}
-
+                    &nbsp;&nbsp; {props.eAnsLbl == props.rightLbl ?
+                        <span style={{ padding: "2px", background: "blue", color: "white" }}>Done</span> : props.eAnsLbl == '' ?
+                            <span style={{ padding: "2px", background: "yellow", color: "black" }}>Miss</span> :
+                            <span style={{ padding: "2px", background: "orange", color: "white" }}>Wrong</span>}
                 </div>
-                &nbsp;&nbsp; {props.eAnsLbl == props.rightLbl ?
-                    <span style={{ padding: "2px", background: "blue", color: "white" }}>Done</span> : props.eAnsLbl == '' ?
-                        <span style={{ padding: "2px", background: "yellow", color: "black" }}>Miss</span> :
-                        <span style={{ padding: "2px", background: "orange", color: "white" }}>Wrong</span>}
+
             </h3>
             <div style={{ margin: "0 auto" }}>
-                <img style={{ objectFit: "contain", width: "1000px", height: "300px" }} src={props.imgLink} alt="" />
+                <img className="q-img" style={{ objectFit: "contain", width: "1000px",  height: "100%" }} src={props.imgLink} alt="" />
             </div>
             <div style={{ width: "80%", margin: "0 auto", display: "flex", justifyContent: 'center' }}>
                 <div style={{ flex: "1", display: "flex", justifyContent: 'flex-start' }}>

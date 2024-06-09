@@ -11,7 +11,7 @@ const QuestionTableItem = (props:any) => {
             <td>{question.examId}</td>
             <td>
                 <button onClick={handleClickEdit}>Sửa</button>
-                <button onClick={() => deleteQuestion(question._id)}>Xóa</button>
+                <button disabled onClick={() => deleteQuestion(question._id)}>Xóa</button>
             </td>
         </tr>
     );

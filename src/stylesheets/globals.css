@@ -223,6 +223,7 @@ table {
   height: 100%;
   display: block;
   object-fit: contain;
+  border: 1px solid black;
 }
 
 .info_avatar span {
@@ -272,4 +273,8 @@ select option {
   .newquestion {
       flex-direction: column;
   }
+}
+
+.q-img{
+  border: 1px solid rgb(230, 227, 227);
 }

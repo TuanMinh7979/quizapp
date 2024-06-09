@@ -38,7 +38,7 @@ const QuestionCard = (props: any) => {
                 </div>
             </h3>
             <div style={{ margin: "0 auto" }}>
-                <img style={{ objectFit: "contain", width: "1000px", height: "100%" }}
+                <img className="q-img" style={{ objectFit: "contain", width: "1000px", height: "100%" }}
                     src={props.imgLink} alt="" />
             </div>
             <div style={{ width: "80%", margin: "0 auto", display: "flex", justifyContent: 'center' }}>

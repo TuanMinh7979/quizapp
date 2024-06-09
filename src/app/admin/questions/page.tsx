@@ -20,7 +20,20 @@ const page = () => {
 
       const { _id: eid, videoLink: eVideoLink, ...restBody } = newQuestion
       let newStartTime = Number(startMin) * 60 + Number(startSec)
-      let newVideoLink = eVideoLink + "?start=" + newStartTime
+      let newVideoLink = ""
+      if (!eVideoLink) {
+        newVideoLink = "https://www.youtube.com/embed/Nuy-p2DhtRI" + "?start=" + newStartTime
+      } else {
+        newVideoLink = eVideoLink + "?start=" + newStartTime
+      }
+
+      // if (!newQuestion.title) {
+        restBody.title = "Đề thi 2022 "+ restBody.title
+      // }
+      if (!newQuestion.note) {
+        restBody.note = "Xem video"
+      }
+
       const response = await axios.post("/api/questions", { videoLink: newVideoLink, ...restBody });
       message.success(response.data.message);
       setQuestions([...questions, response.data.rs])
@@ -217,7 +230,7 @@ const page = () => {
         </div>
         <div className="table-container" style={{ flex: 2, }}>
           <h2>List {questions.length}</h2>
-          <div style={{ display: "flex", justifyContent: "flex-end" , }}>   <Link href={"/admin/exams"} ><span style={{ color: "blue", padding: "12px", background: "cyan" }}>To Exam</span></Link></div>
+          <div style={{ display: "flex", justifyContent: "flex-end", }}>   <Link href={"/admin/exams"} ><span style={{ color: "blue", padding: "12px", background: "cyan" }}>To Exam</span></Link></div>
           <table style={{ width: "100%" }}>
             <thead>
               <tr>

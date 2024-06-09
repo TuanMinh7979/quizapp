@@ -16,8 +16,7 @@ export async function POST(request: NextRequest) {
       ...reqBody, _id: randomObjectId, imgLink: process.env.drivePrefix + "?id=" + idImg + "&sz=w1000",
 
 
-      title: reqBody.title ? reqBody.title : "Đề thi 2023",
-      note: reqBody.note ? reqBody.note : "Xem video"
+
     });
     return NextResponse.json(
       { message: "Question created successfully", rs: rs, success: true },

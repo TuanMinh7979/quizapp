@@ -19,7 +19,8 @@ const page = () => {
       dispatch(SetLoading(true));
 
       const { _id: eid, videoLink: eVideoLink, ...restBody } = newQuestion
-      let newStartTime = Number(startMin) * 60 + Number(startSec)
+      // let newStartTime = Number(startMin) * 60 + Number(startSec)
+      let newStartTime = Math.floor(totalTime) 
       let newVideoLink = ""
       if (!eVideoLink) {
         newVideoLink = "https://www.youtube.com/embed/Nuy-p2DhtRI" + "?start=" + newStartTime
@@ -156,6 +157,7 @@ const page = () => {
 
   const [startMin, setStartMin] = useState(0);
   const [startSec, setStartSec] = useState(0);
+  const [totalTime, setTotalTime] = useState(0);
 
 
 
@@ -165,7 +167,7 @@ const page = () => {
 
   return (
     <> {
-      exams.length > 0 && <div className="App" style={{ display: "flex", width: "100%", }}>
+      exams.length > 0 && <div className="newquestion" style={{ display: "flex", width: "100%", }}>
         <div className="form-container" style={{ flex: 1, }}>
           <h2>New Question
 
@@ -222,8 +224,9 @@ const page = () => {
             <div>
               <label >Start time:</label>
               <div className="" style={{ display: 'flex', gap: '100px' }}>
-                <input type="text" disabled={disableWhenEdit()} onChange={(e: any) => setStartMin(e.target.value)} value={startMin} />
-                <input type="text" disabled={disableWhenEdit()} onChange={(e: any) => setStartSec(e.target.value)} value={startSec} />
+                {/* <input type="text" disabled={disableWhenEdit()} onChange={(e: any) => setStartMin(e.target.value)} value={startMin} />
+                <input type="text" disabled={disableWhenEdit()} onChange={(e: any) => setStartSec(e.target.value)} value={startSec} /> */}
+                <input type="text" disabled={disableWhenEdit()} onChange={(e: any) => setTotalTime(Math.floor(e.target.value) )} value={totalTime} /> 
               </div>
 
             </div>

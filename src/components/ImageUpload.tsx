@@ -81,8 +81,8 @@ const ImageUpload = (props: any) => {
 
 
     return (
-        <div className="info_avatar" onPaste={handlePaste} style={{ background: "#2071c1", width: "100%", height: "300px" }} >
-            <img
+        <div className="info_avatar" onPaste={handlePaste} style={{ background: "#2071c1", width: "100%", height: "360px" }} >
+            <img style={{}}
                 src={
                     avatar
                 }

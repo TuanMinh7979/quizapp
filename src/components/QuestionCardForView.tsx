@@ -15,7 +15,7 @@ const QuestionCardForView = (props: any) => {
 
             </span>
 
-                <div style={{ marginLeft: '30%', display: "flex", gap: "10%" }}>
+                <div style={{  display: "flex", gap: "10%" }}>
                     props.note && <InfoCircleOutlined onClick={() => props.showNoteModal(props.note)} className='info-icon' style={{ color: "blue" }} />
                     {props.videoLink.indexOf("start=0")==-1&& <> <button onClick={() => {
                         window.open(`${props.videoLink}&autoplay=1`, '_blank');

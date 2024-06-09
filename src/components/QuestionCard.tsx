@@ -23,7 +23,7 @@ const QuestionCard = (props: any) => {
                     {props.title && <> &nbsp; &nbsp;  <span style={{ color: "blue", fontSize: "12px" }}>{props.title}</span></>}
                     </span>
 
-                <div style={{ marginLeft: '30%', display: "flex", gap: "10%" }}>
+                <div style={{  display: "flex", gap: "10%" }}>
 
 
              <InfoCircleOutlined onClick={() => props.showNoteModal( <>{<b>Đáp án:  {props.rightLbl}</b>}   {props.note}</>)} className='info-icon' style={{ color: "blue" }} />

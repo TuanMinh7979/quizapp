@@ -23,13 +23,13 @@ const page = () => {
       let newStartTime = Math.floor(totalTime) 
       let newVideoLink = ""
       if (!eVideoLink) {
-        newVideoLink = "https://www.youtube.com/embed/Nuy-p2DhtRI" + "?start=" + newStartTime
+        newVideoLink = "https://www.youtube.com/embed/jSN61THRcIs" + "?start=" + newStartTime
       } else {
         newVideoLink = eVideoLink + "?start=" + newStartTime
       }
 
       // if (!newQuestion.title) {
-      restBody.title = "Đề thi 2022 " + restBody.title
+      restBody.title = "Đề minh họa 2024 " + restBody.title
       // }
       if (!newQuestion.note) {
         restBody.note = "Xem video"

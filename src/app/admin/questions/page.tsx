@@ -13,7 +13,7 @@ const page = () => {
   const [exams, setExams] = useState<any[any]>([]); // State lưu trữ danh sách sinh viên
   const [mode, setMode] = useState("add");
   // imgLink can be url(update), base64 (add)
-  const [newQuestion, setNewQuestion] = useState({ _id: '', title: "kkkkk", rightLbl: '', examId: '', imgLink: '', videoLink: '', note: '' }); // State lưu trữ thông tin sinh viên mới
+  const [newQuestion, setNewQuestion] = useState({ _id: '', title: "", rightLbl: '', examId: '', imgLink: '', videoLink: '', note: '' }); // State lưu trữ thông tin sinh viên mới
   const addQuestionService = async () => {
     try {
       dispatch(SetLoading(true));
@@ -28,7 +28,7 @@ const page = () => {
       }
 
       // if (!newQuestion.title) {
-        restBody.title = "Đề thi 2022 "+ restBody.title
+      restBody.title = "Đề thi 2022 " + restBody.title
       // }
       if (!newQuestion.note) {
         restBody.note = ""
@@ -117,7 +117,7 @@ const page = () => {
       let qsList = qRs.data.questionList;
 
       setQuestions(qsList);
-    
+
       dispatch(SetLoading(false));
     } catch (error: any) {
       console.log(error)
@@ -147,10 +147,11 @@ const page = () => {
   const validateToUpdateQuestion = () => {
     return false
   }
-  console.log("DATA ", newQuestion)
   const changeImgLinkToUp = (base64Str: any) => {
     console.log(newQuestion)
-    // setNewQuestion({ ...newQuestion, imgLink: base64Str })
+    setNewQuestion((prevState: any) => ({
+      ...prevState, imgLink: base64Str
+    }))
   }
 
   const [startMin, setStartMin] = useState(0);
@@ -181,7 +182,7 @@ const page = () => {
             </div>
             <div>
               <label htmlFor="rightLbl">RigthLbl:</label>
-              <select id="rightLbl" name="rightLbl" value={newQuestion.rightLbl} onChange={ onQuestionFieldChange}>
+              <select id="rightLbl" name="rightLbl" value={newQuestion.rightLbl} onChange={onQuestionFieldChange}>
                 <option value=""></option>
                 <option value="A">A</option>
                 <option value="B">B</option>

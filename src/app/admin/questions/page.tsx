@@ -31,7 +31,7 @@ const page = () => {
         restBody.title = "Đề thi 2022 "+ restBody.title
       // }
       if (!newQuestion.note) {
-        restBody.note = "Xem video"
+        restBody.note = ""
       }
 
       const response = await axios.post("/api/questions", { videoLink: newVideoLink, ...restBody });

@@ -13,7 +13,7 @@ const page = () => {
   const [exams, setExams] = useState<any[any]>([]); // State lưu trữ danh sách sinh viên
   const [mode, setMode] = useState("add");
   // imgLink can be url(update), base64 (add)
-  const [newQuestion, setNewQuestion] = useState({ _id: '', title: "", rightLbl: '', examId: '', imgLink: '', videoLink: '', note: '' }); // State lưu trữ thông tin sinh viên mới
+  const [newQuestion, setNewQuestion] = useState({ _id: '', title: "kkkkk", rightLbl: '', examId: '', imgLink: '', videoLink: '', note: '' }); // State lưu trữ thông tin sinh viên mới
   const addQuestionService = async () => {
     try {
       dispatch(SetLoading(true));
@@ -88,6 +88,7 @@ const page = () => {
     }
   };
   const fetchInit = async () => {
+    console.log("fetch init")
     try {
       dispatch(SetLoading(true));
       const eRs = await axios.get(`/admin/api/exams`);
@@ -116,6 +117,7 @@ const page = () => {
       let qsList = qRs.data.questionList;
 
       setQuestions(qsList);
+    
       dispatch(SetLoading(false));
     } catch (error: any) {
       console.log(error)
@@ -145,8 +147,10 @@ const page = () => {
   const validateToUpdateQuestion = () => {
     return false
   }
+  console.log("DATA ", newQuestion)
   const changeImgLinkToUp = (base64Str: any) => {
-    setNewQuestion({ ...newQuestion, imgLink: base64Str })
+    console.log(newQuestion)
+    // setNewQuestion({ ...newQuestion, imgLink: base64Str })
   }
 
   const [startMin, setStartMin] = useState(0);
@@ -177,7 +181,7 @@ const page = () => {
             </div>
             <div>
               <label htmlFor="rightLbl">RigthLbl:</label>
-              <select id="rightLbl" value={newQuestion.rightLbl} onChange={(e) => setNewQuestion({ ...newQuestion, rightLbl: e.target.value })}>
+              <select id="rightLbl" name="rightLbl" value={newQuestion.rightLbl} onChange={ onQuestionFieldChange}>
                 <option value=""></option>
                 <option value="A">A</option>
                 <option value="B">B</option>

@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 export function readAsBase64(file: any) {
     const reader = new FileReader();
     const fileValue = new Promise((resolve, reject) => {
@@ -33,33 +34,33 @@ const ImageUpload = (props: any) => {
         setAvatar(props.imgLinkToShow)
     }, [props.imgLinkToShow])
 
-    const [isDragging, setIsDragging] = useState(false)
-    const onDragOverhdl = (e: any) => {
-        e.preventDefault();
-        setIsDragging(true);
-        e.dataTransfer.dropEffect = "copy";
+    // const [isDragging, setIsDragging] = useState(false)
+    // const onDragOverhdl = (e: any) => {
+    //     e.preventDefault();
+    //     setIsDragging(true);
+    //     e.dataTransfer.dropEffect = "copy";
 
-    }
-    const onDragLeavehdl = (e: any) => {
-        e.preventDefault();
-        setIsDragging(false)
+    // }
+    // const onDragLeavehdl = (e: any) => {
+    //     e.preventDefault();
+    //     setIsDragging(false)
 
-    }
-    const onDragDrophdl = async (e: any) => {
-        e.preventDefault();
-        setIsDragging(false)
-        const files = e.dataTransfer.files
-        if (files.length == 0) return
+    // }
+    // const onDragDrophdl = async (e: any) => {
+    //     e.preventDefault();
+    //     setIsDragging(false)
+    //     const files = e.dataTransfer.files
+    //     if (files.length == 0) return
 
-        if (files) {
-            const file = files[0];
-            if (file) {
-                setAvatar(window.URL.createObjectURL(file));
-                props.changeBase64ToUp(await readAsBase64(file))
-            }
-        }
+    //     if (files) {
+    //         const file = files[0];
+    //         if (file) {
+    //             setAvatar(window.URL.createObjectURL(file));
+    //             props.changeBase64ToUp(await readAsBase64(file))
+    //         }
+    //     }
 
-    }
+    // }
     const handlePaste = async (event: any) => {
       
         const items = event.clipboardData.items;
@@ -73,13 +74,14 @@ const ImageUpload = (props: any) => {
         }
     };
 
+    const dispatch = useDispatch()
     useEffect(() => {
         document.addEventListener('paste', handlePaste)
-    }, [])
+    }, [dispatch])
 
 
     return (
-        <div className="info_avatar" onPaste={handlePaste} style={{ background: "#2071c1", width: "100%", height: "300px" }} onDragOver={onDragOverhdl} onDragLeave={onDragLeavehdl} onDrop={onDragDrophdl}>
+        <div className="info_avatar" onPaste={handlePaste} style={{ background: "#2071c1", width: "100%", height: "300px" }} >
             <img
                 src={
                     avatar

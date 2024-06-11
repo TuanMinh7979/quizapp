@@ -7,9 +7,14 @@ connectDB();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    await Answer.insertMany(reqBody.toAddList);
+    const toaddlst= reqBody.toAddList.filter((el:any)=>el.lbl)
+    await Answer.insertMany(toaddlst);
+
     for (let el of reqBody.toUpdateList) {
-      await Answer.findByIdAndUpdate(el.eAnswerId, { lbl: el.lbl })
+      if(el.lbl){
+        await Answer.findByIdAndUpdate(el.eAnswerId, { lbl: el.lbl })
+      }
+     
     }
     return NextResponse.json(
       { message: "Answer created successfully", success: true },

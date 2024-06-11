@@ -14,7 +14,7 @@ interface PropsType {
     description:string
 }
 const ViewResultComponent = (cb: any) => {
-    return (<span onClick={cb}>View Result</span>)
+    return (<span onClick={cb}>Xem kết quả</span>)
 }
 const ExamCard = (props: PropsType) => {
     const { title, url, answerCnt, questionCnt, correctCnt, description } = props;

@@ -15,10 +15,7 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons'
-interface UserType {
-  username: string; // Use the custom ProductId type
-  _id: string;
-};
+
 function LayoutProvider({ children }: { children: React.ReactNode }) {
   const { currentUser } = useSelector((state: any) => state.users);
   const { loading } = useSelector((state: any) => state.loaders);
@@ -164,6 +161,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                         height: 64,
                       }}
                     />
+                    <span><b>Đã trả lời {currentUser.answerCnt}/{currentUser.totalQuestion}</b></span>
                   </Header>
                   <Content
                     style={{

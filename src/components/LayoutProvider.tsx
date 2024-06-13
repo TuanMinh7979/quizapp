@@ -19,6 +19,7 @@ import {
 function LayoutProvider({ children }: { children: React.ReactNode }) {
   const { currentUser } = useSelector((state: any) => state.users);
   const { loading } = useSelector((state: any) => state.loaders);
+  
   const router = useRouter();
   const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);

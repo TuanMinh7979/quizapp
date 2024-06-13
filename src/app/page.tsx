@@ -3,15 +3,15 @@ import SectionCard from "@/components/SectionCard";
 import { Button, Col, Divider, Row, message } from "antd";
 
 import { useEffect, useState } from "react";
-import { SetLoading } from "@/redux/loadersSlice";
-import { useDispatch } from "react-redux";
+import { SetCurrentSubJect, SetLoading } from "@/redux/loadersSlice";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 export default function Home() {
   const style: React.CSSProperties = { padding: '0 0' };
   const [topics, setTopics] = useState([])
   const dispatch = useDispatch()
+  const { currentSubject } = useSelector((state: any) => state.loaders);
 
-  const [currentSubject, setCurrentSubject] = useState("T")
   const fetchInit = async () => {
     try {
       dispatch(SetLoading(true));
@@ -28,24 +28,31 @@ export default function Home() {
     fetchInit()
   }, [])
 
-  
+  const onSubjectChange = (val: String) => {
+    dispatch(SetCurrentSubJect(val))
+  }
+
+
+
+
+
   return (
     <>
       <Divider orientation="left">
-        <div className="flex-bet w-200"><button className={`${currentSubject=="T"?'bg-cyan':''}`} onClick={()=>setCurrentSubject('T')}>Toán</button>
-          <button className={`${currentSubject=="H"?'bg-cyan':''}`} onClick={()=>setCurrentSubject('H')}>Hóa học</button></div>
+        <div className="flex-bet w-200"><button className={`${currentSubject == "T" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('T')}>Toán</button>
+          <button className={`${currentSubject == "H" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('H')}>Hóa học</button></div>
 
       </Divider>
       <Row gutter={[16, 24]}>
         {
-          currentSubject=="T" && topics && topics.length > 0 && topics.filter((el:any)=>!el.name.startsWith("HH")).map((el: any) => <>
+          currentSubject == "T" && topics && topics.length > 0 && topics.filter((el: any) => !el.name.startsWith("HH")).map((el: any) => <>
             <Col className="gutter-row" span={6}>
               <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
             </Col>
           </>)
         }
         {
-          currentSubject=="H" && topics && topics.length > 0 && topics.filter((el:any)=>el.name.startsWith("HH")).map((el: any) => <>
+          currentSubject == "H" && topics && topics.length > 0 && topics.filter((el: any) => el.name.startsWith("HH")).map((el: any) => <>
             <Col className="gutter-row" span={6}>
               <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
             </Col>

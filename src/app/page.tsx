@@ -10,6 +10,8 @@ export default function Home() {
   const style: React.CSSProperties = { padding: '0 0' };
   const [topics, setTopics] = useState([])
   const dispatch = useDispatch()
+
+  const [currentSubject, setCurrentSubject] = useState("T")
   const fetchInit = async () => {
     try {
       dispatch(SetLoading(true));
@@ -25,12 +27,25 @@ export default function Home() {
   useEffect(() => {
     fetchInit()
   }, [])
+
+  
   return (
     <>
-      <Divider orientation="left">Topic</Divider>
+      <Divider orientation="left">
+        <div className="flex-bet w-200"><button className={`${currentSubject=="T"?'bg-cyan':''}`} onClick={()=>setCurrentSubject('T')}>Toán</button>
+          <button className={`${currentSubject=="H"?'bg-cyan':''}`} onClick={()=>setCurrentSubject('H')}>Hóa học</button></div>
+
+      </Divider>
       <Row gutter={[16, 24]}>
         {
-          topics && topics.length > 0 && topics.map((el: any) => <>
+          currentSubject=="T" && topics && topics.length > 0 && topics.filter((el:any)=>!el.name.startsWith("HH")).map((el: any) => <>
+            <Col className="gutter-row" span={6}>
+              <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
+            </Col>
+          </>)
+        }
+        {
+          currentSubject=="H" && topics && topics.length > 0 && topics.filter((el:any)=>el.name.startsWith("HH")).map((el: any) => <>
             <Col className="gutter-row" span={6}>
               <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
             </Col>

@@ -5,7 +5,7 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  color: #3b3a3a;
+  color: #0076e4;
 }
 
 * {
@@ -277,4 +277,43 @@ select option {
 
 .q-img{
   border: 1px solid rgb(230, 227, 227);
+}
+
+.flex{
+  display: flex;
+}
+
+.flex-bet{
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-start{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.flex-col{
+  display: flex;
+  flex-direction: column;
+}
+
+.w-300{
+  width: 300px;
+}
+
+.w-200{
+  width: 200px;
+}
+
+.w-100{
+  width: 100px;
+}
+
+
+.bg-blue{
+  background-color: blue;
+}
+.bg-cyan{
+  background-color: rgb(120, 226, 255);
 }

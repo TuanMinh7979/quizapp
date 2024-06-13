@@ -39,9 +39,10 @@ export default function Home() {
   return (
     <>
       <Divider orientation="left">
-        <div className="flex-bet w-500"><button className={`${currentSubject == "T" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('T')}>Toán</button>
-          <button className={`${currentSubject == "LT" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('LT')}>Lý thuyết Hóa học</button>
-          <button className={`${currentSubject == "BT" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('BT')}>Bài tâp Hóa học</button></div>
+        <div className="flex-bet w-900"><button className={`${currentSubject == "T" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('T')}>Toán</button>
+          <button className={`${currentSubject == "LT" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('LT')}>Hóa Lý thuyết Tính Chất(LTTC)</button>
+          <button className={`${currentSubject == "LT" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('LT')}>Hóa Lý thuyết Phản ứng(LTPU)</button>
+          <button className={`${currentSubject == "BT" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('BT')}>Bài tập Hóa học</button></div>
 
       </Divider>
       <Row gutter={[16, 24]}>

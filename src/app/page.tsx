@@ -39,20 +39,28 @@ export default function Home() {
   return (
     <>
       <Divider orientation="left">
-        <div className="flex-bet w-200"><button className={`${currentSubject == "T" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('T')}>Toán</button>
-          <button className={`${currentSubject == "H" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('H')}>Hóa học</button></div>
+        <div className="flex-bet w-500"><button className={`${currentSubject == "T" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('T')}>Toán</button>
+          <button className={`${currentSubject == "LT" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('LT')}>Lý thuyết Hóa học</button>
+          <button className={`${currentSubject == "BT" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('BT')}>Bài tâp Hóa học</button></div>
 
       </Divider>
       <Row gutter={[16, 24]}>
         {
-          currentSubject == "T" && topics && topics.length > 0 && topics.filter((el: any) => !el.name.startsWith("HH")).map((el: any) => <>
+          currentSubject == "T" && topics && topics.length > 0 && topics.filter((el: any) => !el.name.startsWith("LT") && !el.name.startsWith("BT")).map((el: any) => <>
             <Col className="gutter-row" span={6}>
               <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
             </Col>
           </>)
         }
         {
-          currentSubject == "H" && topics && topics.length > 0 && topics.filter((el: any) => el.name.startsWith("HH")).map((el: any) => <>
+          currentSubject == "LT" && topics && topics.length > 0 && topics.filter((el: any) => el.name.startsWith("LT")).map((el: any) => <>
+            <Col className="gutter-row" span={6}>
+              <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
+            </Col>
+          </>)
+        }
+        {
+          currentSubject == "BT" && topics && topics.length > 0 && topics.filter((el: any) => el.name.startsWith("BT")).map((el: any) => <>
             <Col className="gutter-row" span={6}>
               <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
             </Col>

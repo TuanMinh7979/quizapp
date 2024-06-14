@@ -10,7 +10,7 @@ export default function Home() {
   const style: React.CSSProperties = { padding: '0 0' };
   const [topics, setTopics] = useState([])
   const dispatch = useDispatch()
-  const  currentSubject  = useSelector((state: any) => state.loaders.currentSubject.startsWith("HH")?state.loaders.currentSubject:"HH0");
+  const  currentSubject  = useSelector((state: any) => state.loaders.currentSubject);
 
   const fetchInit = async () => {
     try {

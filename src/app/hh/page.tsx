@@ -10,7 +10,7 @@ export default function Home() {
   const style: React.CSSProperties = { padding: '0 0' };
   const [topics, setTopics] = useState([])
   const dispatch = useDispatch()
-  const { currentSubject } = useSelector((state: any) => state.loaders);
+  const  currentSubject  = useSelector((state: any) => state.loaders.currentSubject.startsWith("HH")?state.loaders.currentSubject:"HH0");
 
   const fetchInit = async () => {
     try {
@@ -40,28 +40,28 @@ export default function Home() {
     <>
       <Divider orientation="left">
         <div className="flex-bet w-900">
-          <button className={`${currentSubject == "HHLTTC"? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('HHLTTC')}>Hóa Lý thuyết Tính Chất(LTTC)</button>
-          <button className={`${currentSubject == "HHLTPU" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('HHLTPU')}>Hóa Lý thuyết Phản ứng(LTPU)</button>
-          <button className={`${currentSubject == "HHBT" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('HHBT')}>Bài tập Hóa học</button></div>
+          <button className={`${currentSubject == "HH0"? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('HH0')}>Hóa Lý thuyết Tính Chất(LTTC)</button>
+          <button className={`${currentSubject == "HH1" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('HH1')}>Hóa Lý thuyết Phản ứng(LTPU)</button>
+          <button className={`${currentSubject == "HH3" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('HH3')}>Bài tập Hóa học</button></div>
 
       </Divider>
       <Row gutter={[16, 24]}>{
         topics && topics.length > 0 && <> {
-          currentSubject == "HHLTTC" && topics.filter((el: any) => el.name.startsWith("LTTC")).map((el: any) => <>
+          currentSubject == "HH0" && topics.filter((el: any) => el.name.startsWith("LTTC")).map((el: any) => <>
             <Col className="gutter-row" span={6}>
               <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
             </Col>
           </>)
         }
           {
-            currentSubject == "HHLTPU" && topics.filter((el: any) => el.name.startsWith("LTPU")).map((el: any) => <>
+            currentSubject == "HH1" && topics.filter((el: any) => el.name.startsWith("LTPU")).map((el: any) => <>
               <Col className="gutter-row" span={6}>
                 <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
               </Col>
             </>)
           }
           {
-            currentSubject == "HHBT" && topics.filter((el: any) => el.name.startsWith("BT")).map((el: any) => <>
+            currentSubject == "HH3" && topics.filter((el: any) => el.name.startsWith("BT")).map((el: any) => <>
               <Col className="gutter-row" span={6}>
                 <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
               </Col>

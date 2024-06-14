@@ -10,7 +10,7 @@ export default function Home() {
   const style: React.CSSProperties = { padding: '0 0' };
   const [topics, setTopics] = useState([])
   const dispatch = useDispatch()
-  const { currentSubject } = useSelector((state: any) => state.loaders);
+  const currentSubject = useSelector((state: any) => state.loaders.currentSubject.startsWith("HH") ? state.loaders.currentSubject : "T");
 
   const fetchInit = async () => {
     try {
@@ -44,14 +44,17 @@ export default function Home() {
 
       </Divider>
       <Row gutter={[16, 24]}>
-        {
-           topics && topics.length > 0 && topics.filter((el: any) => !el.name.startsWith("LTTC") && !el.name.startsWith("BT") && !el.name.startsWith("LTPU")).map((el: any) => <>
-            <Col className="gutter-row" span={6}>
-              <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
-            </Col>
-          </>)
-        }
-      
+        {topics && topics.length > 0 && <>
+          {
+            currentSubject == "T" && topics.filter((el: any) => el.name.startsWith("T")).map((el: any) => <>
+              <Col className="gutter-row" span={6}>
+                <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
+              </Col>
+            </>)
+          }
+        </>}
+
+
       </Row>
     </>
   );

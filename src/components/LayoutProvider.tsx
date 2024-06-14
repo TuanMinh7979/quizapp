@@ -67,17 +67,22 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
     if (e.key == 'logout') {
       onLogout()
     }
-    if (e.key == '2') {
+    if (e.key == '3') {
       router.push("/admin/questions");
     }
     if (e.key == '1') {
       router.push("/");
     }
+    if (e.key == '2') {
+      router.push("/hh");
+    }
   };
   const getSelectedKeys = () => {
     if (pathname.startsWith("/admin")) {
+      return ['3']
+    } else if (pathname.startsWith("/hh")){
       return ['2']
-    } else {
+    }else{
       return ['1']
     }
   }
@@ -87,10 +92,15 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
         {
           key: '1',
           icon: <VideoCameraOutlined />,
-          label: 'Test',
+          label: 'Toán',
         },
         {
           key: '2',
+          icon: <VideoCameraOutlined />,
+          label: 'Hóa học',
+        },
+        {
+          key: '3',
           icon: <VideoCameraOutlined />,
           label: 'Admin',
         },
@@ -106,7 +116,12 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
         {
           key: '1',
           icon: <VideoCameraOutlined />,
-          label: 'Test',
+          label: 'Toán',
+        },
+        {
+          key: '2',
+          icon: <VideoCameraOutlined />,
+          label: 'Hóa học',
         },
         {
           key: 'logout',

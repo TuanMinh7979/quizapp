@@ -15,7 +15,7 @@ export default function Home() {
   const fetchInit = async () => {
     try {
       dispatch(SetLoading(true));
-      const rs = await axios.get(`/api/topics`);
+      const rs = await axios.get(`/api/topics/toan`);
       let topicLs = rs.data.topicList;
       setTopics(topicLs);
       dispatch(SetLoading(false));
@@ -40,40 +40,18 @@ export default function Home() {
     <>
       <Divider orientation="left">
         <div className="flex-bet w-900"><button className={`${currentSubject == "T" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('T')}>Toán</button>
-          <button className={`${currentSubject == "LTTC" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('LTTC')}>Hóa Lý thuyết Tính Chất(LTTC)</button>
-          <button className={`${currentSubject == "LTPU" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('LTPU')}>Hóa Lý thuyết Phản ứng(LTPU)</button>
-          <button className={`${currentSubject == "BT" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('BT')}>Bài tập Hóa học</button></div>
+        </div>
 
       </Divider>
       <Row gutter={[16, 24]}>
         {
-          currentSubject == "T" && topics && topics.length > 0 && topics.filter((el: any) => !el.name.startsWith("LTTC") && !el.name.startsWith("BT") && !el.name.startsWith("LTPU")).map((el: any) => <>
+           topics && topics.length > 0 && topics.filter((el: any) => !el.name.startsWith("LTTC") && !el.name.startsWith("BT") && !el.name.startsWith("LTPU")).map((el: any) => <>
             <Col className="gutter-row" span={6}>
               <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
             </Col>
           </>)
         }
-        {
-          currentSubject == "LTTC" && topics && topics.length > 0 && topics.filter((el: any) => el.name.startsWith("LTTC")).map((el: any) => <>
-            <Col className="gutter-row" span={6}>
-              <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
-            </Col>
-          </>)
-        }
-        {
-          currentSubject == "LTPU" && topics && topics.length > 0 && topics.filter((el: any) => el.name.startsWith("LTPU")).map((el: any) => <>
-            <Col className="gutter-row" span={6}>
-              <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
-            </Col>
-          </>)
-        }
-        {
-          currentSubject == "BT" && topics && topics.length > 0 && topics.filter((el: any) => el.name.startsWith("BT")).map((el: any) => <>
-            <Col className="gutter-row" span={6}>
-              <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
-            </Col>
-          </>)
-        }
+      
       </Row>
     </>
   );

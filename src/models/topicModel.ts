@@ -9,7 +9,8 @@ const topicSchema = new mongoose.Schema(
         slug: {
             type: String,
             required: true,
-        }
+        }, 
+        subjectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' },
     }
 );
 // delete old model

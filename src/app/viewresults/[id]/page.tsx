@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import {
     ArrowLeftOutlined
 } from '@ant-design/icons'
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { Row, message } from 'antd';
 import ControlBtns from '@/components/ControlBtns';
 import { useDispatch, useSelector } from 'react-redux';
@@ -76,6 +76,8 @@ const ViewResult = () => {
         setIsNoteModalOpen(false);
     };
     const [showMode,setShowMode ] = useState("0");
+
+
     return (
         <>{data && <>
             {answerModalData && <AnswerModal answerModalData={answerModalData} isAnswerModalOpen={isAnswerModalOpen} handleModalBtns={handleModalBtns} ></AnswerModal>}

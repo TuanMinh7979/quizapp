@@ -29,7 +29,7 @@ export async function uploadFromBase64(fileName: String, base64Str: String) {
         })
         const buffer = Buffer.from(base64Str.split(',')[1], 'base64');
         const typeStr = await fileTypeFromBuffer(buffer);
-        console.log(typeStr)
+
         const fileMetadata = {
             name: fileName + "." + typeStr?.ext,
             mimeType: typeStr?.mime,

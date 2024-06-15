@@ -40,7 +40,7 @@ const Exam = () => {
         try {
             dispatch(SetLoading(true));
             const response = await axios.get(`/api/exams/${id}?userId=${currentUser._id}`);
-            console.log("response .....", response)
+    
             let qsList = response.data.rs.questions;
             let answerList = response.data.rs.answers;
             let dataToExamTry = []
@@ -56,7 +56,7 @@ const Exam = () => {
                 })
                 el["eAnsLbl"] = eAnsIdx != -1 ? answerList[eAnsIdx].lbl : ''
             }
-            console.log(response.data.rs)
+
             setData(response.data.rs);
             setExamTry([...dataToExamTry])
         } catch (error: any) {

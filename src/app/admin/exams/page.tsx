@@ -13,7 +13,7 @@ const page = () => {
   const [topics, setTopics] = useState<any[any]>([]);
   const [mode, setMode] = useState("add");
   // topicSlug can be url(update), base64 (add)
-  const [newExam, setNewExam] = useState({ _id: '', name: '', topicSlug: '', subjectId: "", description: '' }); // State lưu trữ thông tin sinh viên mới
+  const [newExam, setNewExam] = useState({ _id: '', name: '', topicSlug: '', subjectId: "666c5b40b7d9b9d0b5e2ec47", description: '' }); // State lưu trữ thông tin sinh viên mới
   const addExamService = async () => {
     try {
       dispatch(SetLoading(true));
@@ -135,7 +135,7 @@ const page = () => {
             <select disabled={mode == "edit"} onChange={(event: any) => onTopicSelectionName(event)} id="topicName" value={newExam.topicSlug}>
 
 
-              {topics.filter((el: any) => el.subjectId == (newExam.subjectId || "666c5b40b7d9b9d0b5e2ec47")).map((el: any) =>
+              {topics.filter((el: any) => el.subjectId == newExam.subjectId ).map((el: any) =>
                 <option value={el.slug}>{el.name}</option>
               )}
             </select>

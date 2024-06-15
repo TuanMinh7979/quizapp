@@ -25,6 +25,10 @@ export default function Home() {
     }
   };
   useEffect(() => {
+    if(!currentSubject.startsWith("HH")){
+      dispatch(SetCurrentSubJect("HH0")); 
+    }
+   
     fetchInit()
   }, [])
 

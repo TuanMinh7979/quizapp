@@ -14,17 +14,22 @@ export default function Home() {
 
   const fetchInit = async () => {
     try {
+      
       dispatch(SetLoading(true));
       const rs = await axios.get(`/api/topics/toan`);
       let topicLs = rs.data.topicList;
       setTopics(topicLs);
-      dispatch(SetLoading(false));
+      dispatch(SetLoading(false)); 
+
     } catch (error: any) {
       dispatch(SetLoading(false));
       message.error(error.message);
     }
   };
   useEffect(() => {
+    if(!currentSubject.startsWith("T")){
+      dispatch(SetCurrentSubJect("T0")); 
+    }
     fetchInit()
   }, [])
 
@@ -39,14 +44,14 @@ export default function Home() {
   return (
     <>
       <Divider orientation="left">
-        <div className="flex-bet w-900"><button className={`${currentSubject == "T" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange('T')}>Toán</button>
+        <div className="flex-bet w-900"><button className={`${currentSubject == "T0" ? 'bg-cyan' : ''}`} onClick={() => onSubjectChange("T0")}>Toán</button>
         </div>
 
       </Divider>
       <Row gutter={[16, 24]}>
         {topics && topics.length > 0 && <>
           {
-            currentSubject == "T" && topics.map((el: any) => <>
+            currentSubject == "T0" && topics.map((el: any) => <>
               <Col className="gutter-row" span={6}>
                 <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
               </Col>

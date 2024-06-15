@@ -160,7 +160,7 @@ const page = () => {
 
 
   const [totalTime, setTotalTime] = useState(0);
-  const [curSubjectId, setCurrentSubjectId] = useState("");
+  const [curSubjectId, setCurrentSubjectId] = useState("666c5b40b7d9b9d0b5e2ec47");
 
 
 

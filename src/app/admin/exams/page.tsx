@@ -13,7 +13,7 @@ const page = () => {
   const [topics, setTopics] = useState<any[any]>([]);
   const [mode, setMode] = useState("add");
   // topicSlug can be url(update), base64 (add)
-  const [newExam, setNewExam] = useState({ _id: '', name: '', topicName: '', topicSlug: '', description: '' }); // State lưu trữ thông tin sinh viên mới
+  const [newExam, setNewExam] = useState({ _id: '', name: '', topicSlug: '', subjectId: "", description: '' }); // State lưu trữ thông tin sinh viên mới
   const addExamService = async () => {
     try {
       dispatch(SetLoading(true));
@@ -35,7 +35,7 @@ const page = () => {
   }
   const onClickReset = () => {
     setMode("add")
-    setNewExam({ ...newExam, _id: '', name: '', topicSlug: topics[0].slug, description: '', topicName: '' })
+    setNewExam({ ...newExam, _id: '', name: '', topicSlug: topics[0].slug, description: '', subjectId: '666c5b40b7d9b9d0b5e2ec47' })
   }
   const deleteExamService = async (id: string) => {
     try {
@@ -58,9 +58,9 @@ const page = () => {
       setTopics(topicLs);
 
 
-     
+
       if (topicLs.length > 0) {
-        setNewExam({...newExam, topicName:topicLs[0].name, topicSlug:topicLs[0].slug})
+        setNewExam({ ...newExam, topicSlug: topicLs[0].slug })
         const examRs = await axios.get(`/admin/api/examsbytopic?topicSlug=${topicLs[0].slug}`);
         let examLs = examRs.data.examList;
         setExams(examLs);
@@ -93,7 +93,7 @@ const page = () => {
   const onTopicSelectionName = (event: any) => {
     const topicFinded = topics.find((el: any) => el.slug == event.target.value)
     if (topicFinded) {
-      setNewExam({ ...newExam, topicName: topicFinded.name, topicSlug: topicFinded.slug })
+      setNewExam({ ...newExam, topicSlug: topicFinded.slug })
       fetchWhenChangeExamName(event.target.value)
     }
   }
@@ -101,7 +101,7 @@ const page = () => {
     return mode == "edit"
   }
   const validateToAddExam = () => {
-    return newExam.name == '' || newExam.topicSlug == '' || newExam.topicName == ''
+    return newExam.name == '' || newExam.topicSlug == '' || newExam.subjectId == ''
   }
   const onExamFieldChange = (event: any) => {
     setNewExam({ ...newExam, [event.target.name]: event.target.value })
@@ -111,9 +111,20 @@ const page = () => {
       <div className="form-container" style={{ flex: 1, }}>
         <h2>New Exam</h2>
         <form>
+
           <div>
             <label htmlFor="name">ID:</label>
             <input type="text" id="_id" value={newExam._id} disabled />
+          </div>
+
+          <div>
+            <label htmlFor="subjectId">SubjectId:</label>
+            <select name="subjectId" disabled={mode == "edit"} onChange={onExamFieldChange} id="subjectId" value={newExam.subjectId}>
+
+              <option value="666c5b40b7d9b9d0b5e2ec47">toan</option>
+              <option value="666c5b52b7d9b9d0b5e2ec4a">hh</option>
+
+            </select>
           </div>
           <div>
             <label htmlFor="name">Name:</label>
@@ -122,7 +133,9 @@ const page = () => {
           <div>
             <label htmlFor="topicName">TopicName:</label>
             <select disabled={mode == "edit"} onChange={(event: any) => onTopicSelectionName(event)} id="topicName" value={newExam.topicSlug}>
-              {topics.map((el: any) =>
+
+
+              {topics.filter((el: any) => el.subjectId == (newExam.subjectId || "666c5b40b7d9b9d0b5e2ec47")).map((el: any) =>
                 <option value={el.slug}>{el.name}</option>
               )}
             </select>
@@ -142,7 +155,7 @@ const page = () => {
       </div>
       <div className="table-container" style={{ flex: 2, }}>
         <h2>List {exams.length}</h2>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>   <Link href={"/admin/questions"} ><span style={{ color: "blue" , padding: "12px", background: "cyan"}}>To Question</span></Link></div>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>   <Link href={"/admin/questions"} ><span style={{ color: "blue", padding: "12px", background: "cyan" }}>To Question</span></Link></div>
 
         <table style={{ width: "100%" }}>
           <thead>

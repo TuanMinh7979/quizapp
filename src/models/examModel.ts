@@ -6,10 +6,7 @@ const examSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
-        topicName: {
-            type: String,
-            required: true,
-        },
+        
         topicSlug: {
             type: String,
             required: true,
@@ -17,7 +14,8 @@ const examSchema = new mongoose.Schema(
         description: {
             type: String,
             required: true,
-        }
+        }, 
+        subjectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' },
     }
 );
 // delete old model

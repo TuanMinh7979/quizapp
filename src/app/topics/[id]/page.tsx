@@ -38,6 +38,7 @@ const Section = () => {
         let correctCnt = 0;
         for (let ansI of answersTemp) {
           let idx = questionsTemp.findIndex((el: any) => el._id == ansI.questionId);
+          console.log(questionsTemp)
           if (ansI.lbl == questionsTemp[idx].rightLbl) {
             correctCnt++;
           }
@@ -62,7 +63,7 @@ const Section = () => {
       <Row gutter={[16, 24]}>
         {exams.map((el) => <>
           <Col className="gutter-row exam-col" span={6}>
-            <div className="math-section" style={style}><ExamCard description={el.description} correctCnt={el.correctCnt} questionCnt={el.questionCnt} answerCnt={el.answerCnt} url={`/exams/${el.name}`} title={el?.name}></ExamCard></div>
+            <div className="math-section" style={style}><ExamCard description={el.description} correctCnt={el.correctCnt} questionCnt={el.questionCnt} answerCnt={el.answerCnt} url={`/exams/${el.name}`} title={""}></ExamCard></div>
           </Col>
 
         </>)}

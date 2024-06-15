@@ -33,7 +33,8 @@ const ExamCard = (props: PropsType) => {
         style={{ width: "100%", border: "1px solid black" }}
         cover={
             <div style={{ display: "flex", justifyContent: "space-between", padding: '0px 20px', borderBottom: "1px solid #C6CBDE" }}><h3 >{title}</h3>
-                {correctCnt == questionCnt && correctCnt != 0 ? <h4 className='exam-status exam-status-done'>Done</h4> : answerCnt == 0 ? <h4 className='exam-status exam-status-new'>New</h4> : <h4 className='exam-status exam-status-continue'>Continue</h4>}
+                {correctCnt == questionCnt && correctCnt != 0 ? <h4 className='exam-status exam-status-done'>Done</h4> : answerCnt == 0 ? 
+                <h4 className='exam-status exam-status-new'>New</h4> : <h4 className='exam-status exam-status-continue'>Continue</h4>}
             </div>
         }
         actions={

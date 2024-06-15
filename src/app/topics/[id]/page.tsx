@@ -59,7 +59,7 @@ const Section = () => {
 
   return (
     <>{exams && exams.length > 0 && <>
-      <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={onClickBack} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>{exams[0]?.topicName}</h3></div>
+      <div style={{ display: "flex" }}>  <ArrowLeftOutlined className='backbtn' onClick={onClickBack} /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>{id}</h3></div>
       <Row gutter={[16, 24]}>
         {exams.map((el) => <>
           <Col className="gutter-row exam-col" span={6}>

@@ -158,9 +158,9 @@ const page = () => {
     }))
   }
 
-  const [startMin, setStartMin] = useState(0);
-  const [startSec, setStartSec] = useState(0);
+
   const [totalTime, setTotalTime] = useState(0);
+  const [curSubjectId, setCurrentSubjectId] = useState("");
 
 
 
@@ -176,6 +176,15 @@ const page = () => {
 
 
           </h2>
+          <div>
+              <label htmlFor="subjectId">SubjectId:</label>
+             <select disabled={mode == "edit"} onChange={(event: any) => setCurrentSubjectId(event.target.value)} id="subjectId" value={curSubjectId}>
+             
+                  <option value="666c5b40b7d9b9d0b5e2ec47">toan</option>
+                  <option value="666c5b52b7d9b9d0b5e2ec4a">hh</option>
+                
+              </select>
+            </div>
           <form>
             <div>
               <label htmlFor="name">ID:</label>
@@ -195,10 +204,11 @@ const page = () => {
                 <option value="D">D</option>
               </select>
             </div>
+
             <div>
               <label htmlFor="examId">ExamId:</label>
               <select disabled={mode == "edit"} onChange={(event: any) => onExamChange(event)} id="examId" value={newQuestion.examId}>
-                {exams.map((el: any) =>
+                {exams.filter((el:any)=>el.subjectId==curSubjectId).map((el: any) =>
                   <option value={el._id}>{el.name}</option>
                 )}
               </select>

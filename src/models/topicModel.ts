@@ -10,6 +10,12 @@ const topicSchema = new mongoose.Schema(
             type: String,
             required: true,
         }, 
+
+        vip:{
+            type:Number
+
+            
+        }, 
         subjectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' },
     }
 );

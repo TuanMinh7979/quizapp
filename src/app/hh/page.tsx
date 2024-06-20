@@ -53,21 +53,21 @@ export default function Home() {
         topics && topics.length > 0 && <> {
           currentSubject == "HH0" && topics.filter((el: any) => el.name.startsWith("LTTC")).map((el: any) => <>
             <Col className="gutter-row" span={6}>
-              <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
+              <div className="math-section" style={style}><SectionCard vip={el.vip} url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
             </Col>
           </>)
         }
           {
             currentSubject == "HH1" && topics.filter((el: any) => el.name.startsWith("LTPU")).map((el: any) => <>
               <Col className="gutter-row" span={6}>
-                <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
+                <div className="math-section" style={style}><SectionCard vip={el.vip}  url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
               </Col>
             </>)
           }
           {
             currentSubject == "HH3" && topics.filter((el: any) => el.name.startsWith("BT")).map((el: any) => <>
               <Col className="gutter-row" span={6}>
-                <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
+                <div className="math-section" style={style}><SectionCard  vip={el.vip} url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
               </Col>
             </>)
           }</>

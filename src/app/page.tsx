@@ -53,7 +53,7 @@ export default function Home() {
           {
             currentSubject == "T0" && topics.map((el: any) => <>
               <Col className="gutter-row" span={6}>
-                <div className="math-section" style={style}><SectionCard url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
+                <div className="math-section" style={style}><SectionCard vip={el.vip} url={`/topics/${el.slug}`} title={el.name}></SectionCard></div>
               </Col>
             </>)
           }
